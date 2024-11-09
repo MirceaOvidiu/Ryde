@@ -1,5 +1,6 @@
-package com.example.ryde;
+package com.example.ryde.Dto;
 
+import com.example.ryde.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

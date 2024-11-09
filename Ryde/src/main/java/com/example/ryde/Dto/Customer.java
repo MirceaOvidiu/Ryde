@@ -1,4 +1,4 @@
-package com.example.ryde;
+package com.example.ryde.Dto;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,9 +25,6 @@ public class Customer {
     @Column(name = "iban")
     private String iban;
 
-    @Column(name = "phone")
-    private String phone;
-
     @Column(name = "email")
     private String email;
 
@@ -43,13 +40,12 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String customerID, String name, String surname, char gender, String iban, String phone, String email, String username, String password, String role) {
-        this.customerID = customerID;
+    public Customer(String name, String surname, char gender,
+                    String iban, String email, String username, String password, String role) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
         this.iban = iban;
-        this.phone = phone;
         this.email = email;
         this.username = username;
         this.password = password;
@@ -94,14 +90,6 @@ public class Customer {
 
     public void setIban(String iban) {
         this.iban = iban;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getEmail() {

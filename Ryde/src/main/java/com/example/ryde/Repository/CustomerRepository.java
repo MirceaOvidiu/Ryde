@@ -1,5 +1,6 @@
-package com.example.ryde;
+package com.example.ryde.Repository;
 
+import com.example.ryde.Dto.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

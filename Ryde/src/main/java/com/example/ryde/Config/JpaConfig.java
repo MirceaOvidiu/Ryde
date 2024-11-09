@@ -1,4 +1,4 @@
-package com.example.ryde;
+package com.example.ryde.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

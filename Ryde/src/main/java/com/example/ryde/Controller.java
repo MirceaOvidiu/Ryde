@@ -1,27 +1,33 @@
 package com.example.ryde;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.UUID;
 
 @RestController
 public class Controller {
 
-    private final CustomerRepository customerRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public Controller(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public Controller(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
+    @PostMapping("/register")
+    public String register(@RequestParam String name, @RequestParam String surname, @RequestParam char gender,
+                           @RequestParam String iban, @RequestParam String email, @RequestParam String username,
+                           @RequestParam String password) {
+        String customerId = UUID.randomUUID().toString(); // Generate a unique customerID
+        String sql = "INSERT INTO customer (customerId, name, surname, gender,iban, email, username, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        Customer customer = customerRepository.findByUsernameAndPassword(username, password);
-        if (customer != null) {
-            return "Login successful!";
+        int result = jdbcTemplate.update(sql, customerId, name, surname, gender, iban, email, username, password, "customer");
+        if (result > 0) {
+            return "Customer registered successfully!";
         } else {
-            return "Invalid username or password!";
+            return "Error registering customer!";
         }
     }
 }
