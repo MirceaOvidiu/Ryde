@@ -12,14 +12,15 @@ public class UserMapper {
                 user.getUsername(),
                 user.getPassword(),
                 user.getEmail(),
-                user.getIban()
+                user.getIban(),
+                user.getRole()
         );
     }
 
     public static MyUser mapToUser(UserDto userDto) {
         return new MyUser(
                 userDto.getId(),
-                userDto.getName(),
+                userDto.getUsername(),
                 userDto.getPassword(),
                 userDto.getEmail(),
                 userDto.getIban()
