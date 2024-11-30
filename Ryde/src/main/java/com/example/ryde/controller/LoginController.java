@@ -31,10 +31,10 @@ public class LoginController {
         try {
             UserDto userDto = userService.loginUser(loginDto);
             model.addAttribute("user", userDto);
-            return "userProfile"; // The name of the Thymeleaf template to display user data
+            return "redirect:/userActions";
         } catch (RuntimeException e) {
             model.addAttribute("error", "Invalid username or password");
-            return "login"; // The name of the Thymeleaf template for the login page
+            return "login";
         }
     }
 }

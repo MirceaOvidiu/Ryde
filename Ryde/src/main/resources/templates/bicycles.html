@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bicycles</title>
+</head>
+<body>
+<h2>Bicycles List</h2>
+<div th:if="${bicycles != null}">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Model</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bicycle : ${bicycles}">
+            <td th:text="${bicycle.id}"></td>
+            <td th:text="${bicycle.model}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${bicycles == null}">
+    <p>No bicycles available.</p>
+</div>
+</body>
+</html>

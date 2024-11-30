@@ -25,11 +25,10 @@ public class UserServiceImplementation implements UserService {
     }
 
     public UserDto loginUser(LoginDto loginDto) {
-        // SQL query to fetch user data based on username
         String sql = "SELECT * FROM \"user\" WHERE username = ?";
 
         // Execute the query and map the result set to a MyUser object
-        MyUser user = jdbcTemplate.queryForObject(sql, new Object[]{loginDto.getUsername()}, (rs, rowNum) -> {
+        MyUser user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             MyUser u = new MyUser();
             u.setId(rs.getLong("id"));
             u.setUsername(rs.getString("username"));
@@ -38,7 +37,7 @@ public class UserServiceImplementation implements UserService {
             u.setIban(rs.getString("iban"));
             u.setEmail(rs.getString("email"));
             return u;
-        });
+        }, loginDto.getUsername());
 
         // Check if the user exists and the password matches
         if (user != null && user.getPassword().equals(hashPassword(loginDto.getPassword()))) {
@@ -52,6 +51,13 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
+        String sql = "SELECT COUNT(*) FROM \"user\" WHERE username = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userDto.getUsername());
+
+        if (count != null && count > 0) {
+            throw new RuntimeException("Username already exists");
+        }
+
         MyUser user = UserMapper.mapToUser(userDto);
         user.setRole("USER");
         // SHA 256 hashing
