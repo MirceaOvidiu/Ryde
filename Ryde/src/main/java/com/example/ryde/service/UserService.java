@@ -6,4 +6,5 @@ import com.example.ryde.dto.UserDto;
 public interface UserService {
     UserDto createUser(UserDto userDto);
     UserDto loginUser(LoginDto loginDto);
+    UserDto getMyUserById(Long id);
 }

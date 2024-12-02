@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ValueGenerationType;
 
 import java.io.Serializable;
 
@@ -24,5 +23,5 @@ public class Bicycle implements Serializable {
     private String model;
     private long location;
     private float hourly_rate;
-    private long occupied_by;
+    private Long occupied_by;
 }

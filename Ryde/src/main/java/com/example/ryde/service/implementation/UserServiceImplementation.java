@@ -24,6 +24,28 @@ public class UserServiceImplementation implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
+    public UserDto getMyUserById(Long id) {
+        // MyUser user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        String sql = "SELECT * FROM \"user\" WHERE id = ?";
+        MyUser user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            MyUser Usr = new MyUser();
+            Usr.setId(rs.getLong("id"));
+            Usr.setUsername(rs.getString("username"));
+            Usr.setPassword(rs.getString("password"));
+            Usr.setRole(rs.getString("role"));
+            Usr.setIban(rs.getString("iban"));
+            Usr.setEmail(rs.getString("email"));
+            return Usr;
+        }, id);
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        return UserMapper.mapToUserDto(user);
+    }
+
     public UserDto loginUser(LoginDto loginDto) {
         String sql = "SELECT * FROM \"user\" WHERE username = ?";
 
@@ -54,7 +76,7 @@ public class UserServiceImplementation implements UserService {
         String sql = "SELECT COUNT(*) FROM \"user\" WHERE username = ?";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userDto.getUsername());
 
-        if (count != null && count > 0) {
+        if (count > 0) {
             throw new RuntimeException("Username already exists");
         }
 
