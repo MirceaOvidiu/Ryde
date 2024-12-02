@@ -1,24 +1,49 @@
 package com.example.ryde.controller;
 
+import com.example.ryde.dto.UserDto;
+import com.example.ryde.mapper.UserMapper;
+import com.example.ryde.model.Bicycle;
+import com.example.ryde.model.MyUser;
 import com.example.ryde.service.BicycleService;
+import com.example.ryde.service.UserService;
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Controller
 public class BicycleController {
 
     private final BicycleService bicycleService;
+    private final UserService userService;
 
     @Autowired
-    public BicycleController(BicycleService bicycleService) {
+    public BicycleController(BicycleService bicycleService, UserService userService) {
         this.bicycleService = bicycleService;
+        this.userService = userService;
     }
 
     @GetMapping("/bicycles")
     public String getAllBicycles(Model model) {
         model.addAttribute("bicycles", bicycleService.getAllBicycles());
         return "bicycles";
+    }
+
+    @PostMapping("/reserveBicycle")
+    public String reserveBicycle(@RequestParam Long bicycleId, Model model) {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        UserDto userDto = (UserDto) attr.getRequest().getSession().getAttribute("currentUser");
+        if (userDto != null) {
+            MyUser user = UserMapper.mapToUser(userService.getMyUserById(userDto.getId()));
+            Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+            bicycleService.reserveBicycle(bicycle, user);
+            return "redirect:/bicycles";
+        } else {
+            return "redirect:/login";
+        }
     }
 }

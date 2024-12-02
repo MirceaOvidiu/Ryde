@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 @Controller
 public class LoginController {
 
@@ -23,13 +26,15 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginDto", new LoginDto());
-        return "login"; // The name of the Thymeleaf template for the login page
+        return "login";
     }
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute LoginDto loginDto, Model model) {
         try {
             UserDto userDto = userService.loginUser(loginDto);
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            attr.getRequest().getSession(true).setAttribute("currentUser", userDto);
             model.addAttribute("user", userDto);
             return "redirect:/userActions";
         } catch (RuntimeException e) {
