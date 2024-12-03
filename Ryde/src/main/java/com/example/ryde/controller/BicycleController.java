@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 @Controller
 public class BicycleController {
@@ -36,14 +38,23 @@ public class BicycleController {
     @PostMapping("/reserveBicycle")
     public String reserveBicycle(@RequestParam Long bicycleId, Model model) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        attr.getRequest().getSession().setAttribute("reservedBicycleId", bicycleId);
         UserDto userDto = (UserDto) attr.getRequest().getSession().getAttribute("currentUser");
         if (userDto != null) {
             MyUser user = UserMapper.mapToUser(userService.getMyUserById(userDto.getId()));
             Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
             bicycleService.reserveBicycle(bicycle, user);
+            model.addAttribute("bicycles", bicycleService.getAllBicycles());
             return "redirect:/bicycles";
         } else {
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("/reserveBicycle")
+    public String showReserveBicyclePage(@RequestParam Long bicycleId, Model model) {
+        Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+        model.addAttribute("bicycle", bicycle);
+        return "redirect:/bicycles";
     }
 }

@@ -11,10 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Controller
 public class UserActionsController {
 
-    private final UserService userService;
-
     public UserActionsController(UserService userService) {
-        this.userService = userService;
     }
 
     @GetMapping("/userActions")

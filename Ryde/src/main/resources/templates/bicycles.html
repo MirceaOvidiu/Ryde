@@ -83,7 +83,7 @@
                 <td th:text="${bicycle.id}"></td>
                 <td th:text="${bicycle.model}"></td>
                 <td>
-                    <button th:if="${bicycle.occupied_by == null}" class="reserve-button">Reserve</button>
+                    <button th:if="${bicycle.occupied_by == null}" th:attr="onclick='location.href=\'/reserveBicycle?bicycleId=' + ${bicycle.id} + '\''" class="reserve-button">Reserve</button>
                     <button th:if="${bicycle.occupied_by != null}" class="busy-button">Busy</button>
                 </td>
             </tr>
