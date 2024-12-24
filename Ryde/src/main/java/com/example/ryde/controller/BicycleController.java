@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
 @Controller
 public class BicycleController {
 
@@ -43,6 +40,7 @@ public class BicycleController {
         if (userDto != null) {
             MyUser user = UserMapper.mapToUser(userService.getMyUserById(userDto.getId()));
             Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+            bicycle.setOccupied_by(user.getId());
             bicycleService.reserveBicycle(bicycle, user);
             model.addAttribute("bicycles", bicycleService.getAllBicycles());
             return "redirect:/bicycles";

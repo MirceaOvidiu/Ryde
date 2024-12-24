@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Service
@@ -17,31 +18,34 @@ public class BicycleServiceImplementation implements BicycleService {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BicycleServiceImplementation(BicycleRepository bicycleRepository) {
+    public BicycleServiceImplementation(BicycleRepository bicycleRepository, DataSource dataSource) {
         this.bicycleRepository = bicycleRepository;
-        this.jdbcTemplate = new JdbcTemplate();
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public Bicycle getBicycleById(Long id) {
-       String sql = "SELECT * FROM bicycle WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-              Bicycle b = new Bicycle();
-              b.setId(rs.getLong("id"));
-              b.setModel(rs.getString("model"));
-              b.setHourly_rate(rs.getFloat("price"));
-              b.setOccupied_by(rs.getLong("occupied_by"));
-              return b;
-         }, id);
+//       String sql = "SELECT * FROM bicycle WHERE id = ?";
+//        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+//              Bicycle b = new Bicycle();
+//              b.setId(rs.getLong("id"));
+//              b.setModel(rs.getString("model"));
+//              b.setHourly_rate(rs.getFloat("price"));
+//              b.setOccupied_by(rs.getLong("occupied_by"));
+//              return b;
+//         }, id);
 
         // AWJ =))
-        // return bicycleRepository.findBicycleById(id);
+         return bicycleRepository.findBicycleById(id);
     }
 
     public void reserveBicycle(Bicycle bicycle, MyUser user) {
-        bicycle.setOccupied_by(user.getId());
-        bicycleRepository.save(bicycle);
-    }
+//        bicycle.setOccupied_by(user.getId());
+//        bicycleRepository.save(bicycle);
+
+        String sql = "UPDATE bicycle SET occupied_by = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.getId(), bicycle.getId());
+}
 
     @Override
     public List<Bicycle> getAllBicycles() {

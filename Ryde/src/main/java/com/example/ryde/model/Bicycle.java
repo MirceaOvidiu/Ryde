@@ -19,9 +19,9 @@ import java.io.Serializable;
 public class Bicycle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
     private String model;
-    private long location;
-    private float hourly_rate;
+    private Long location;
+    private Float hourly_rate;
     private Long occupied_by;
 }
