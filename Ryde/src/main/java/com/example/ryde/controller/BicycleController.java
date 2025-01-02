@@ -1,11 +1,11 @@
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;
-import com.example.ryde.mapper.UserMapper;
 import com.example.ryde.model.Bicycle;
-import com.example.ryde.model.MyUser;
 import com.example.ryde.service.BicycleService;
 import com.example.ryde.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,16 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.sql.DataSource;
+
 @Controller
 public class BicycleController {
 
     private final BicycleService bicycleService;
-    private final UserService userService;
+    private final JdbcTemplate jdbcTemplate;
+    private final DataSource dataSource;
 
     @Autowired
-    public BicycleController(BicycleService bicycleService, UserService userService) {
+    public BicycleController(BicycleService bicycleService, UserService userService, DataSource dataSource) {
         this.bicycleService = bicycleService;
-        this.userService = userService;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.dataSource = dataSource;
     }
 
     @GetMapping("/bicycles")
@@ -33,20 +38,16 @@ public class BicycleController {
     }
 
     @PostMapping("/reserveBicycle")
-    public String reserveBicycle(@RequestParam Long bicycleId, Model model) {
+    public String reserveBicycle(@RequestParam Long bicycleId) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        attr.getRequest().getSession().setAttribute("reservedBicycleId", bicycleId);
-        UserDto userDto = (UserDto) attr.getRequest().getSession().getAttribute("currentUser");
-        if (userDto != null) {
-            MyUser user = UserMapper.mapToUser(userService.getMyUserById(userDto.getId()));
-            Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
-            bicycle.setOccupied_by(user.getId());
-            bicycleService.reserveBicycle(bicycle, user);
-            model.addAttribute("bicycles", bicycleService.getAllBicycles());
-            return "redirect:/bicycles";
-        } else {
-            return "redirect:/login";
-        }
+        HttpSession session = attr.getRequest().getSession();
+        UserDto userDto = (UserDto) session.getAttribute("currentUser");
+        Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+
+        String updateQuery = "UPDATE bicycle SET occupied_by = ? WHERE id = ?";
+        jdbcTemplate.update(updateQuery, userDto.getId(), bicycle.getId());
+        session.setAttribute("reservedBicycleId", bicycleId);
+        return "redirect:/bicycles";
     }
 
     @GetMapping("/reserveBicycle")

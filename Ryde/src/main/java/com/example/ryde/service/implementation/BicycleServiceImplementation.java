@@ -1,7 +1,6 @@
 package com.example.ryde.service.implementation;
 
 import com.example.ryde.model.Bicycle;
-import com.example.ryde.model.MyUser;
 import com.example.ryde.repository.BicycleRepository;
 import com.example.ryde.service.BicycleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +38,14 @@ public class BicycleServiceImplementation implements BicycleService {
          return bicycleRepository.findBicycleById(id);
     }
 
-    public void reserveBicycle(Bicycle bicycle, MyUser user) {
-//        bicycle.setOccupied_by(user.getId());
-//        bicycleRepository.save(bicycle);
-
-        String sql = "UPDATE bicycle SET occupied_by = ? WHERE id = ?";
-        jdbcTemplate.update(sql, user.getId(), bicycle.getId());
+    public void reserveBicycle(Bicycle bicycle, Long id) {
+        bicycle.setOccupied_by(id);
 }
+
+    @Override
+    public void saveBicycle(Bicycle bicycle) {
+        bicycleRepository.save(bicycle);
+    }
 
     @Override
     public List<Bicycle> getAllBicycles() {

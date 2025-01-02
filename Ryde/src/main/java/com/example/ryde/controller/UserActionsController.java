@@ -24,7 +24,7 @@ public class UserActionsController {
     public String logoutUser() {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         attr.getRequest().getSession().removeAttribute("currentUser");
-        return "redirect:/index";
+        return "index";
     }
 
     @GetMapping("/userDetails")
