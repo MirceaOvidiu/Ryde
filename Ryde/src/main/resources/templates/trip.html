@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bike Sharing</title>
+  <title>Ryde with us</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -94,14 +94,14 @@
 </head>
 <body>
 <div class="container">
-  <h2>Start Your Trip</h2>
+  <h2>Start Your Ryde</h2>
   <form id="startTripForm" action="/startTrip" method="post">
     <label for="dockingStation">Choose a starting docking station:</label>
     <select id="dockingStation" name="dockingStation" required>
       <option value="" disabled selected>Select a docking station</option>
       <option th:each="station : ${dockingStations}" th:value="${station.name}" th:text="${station.name}"></option>
     </select>
-    <label for="bicycle">Choose a bicycle:</label>
+    <label for="bicycle">Choose an available bicycle:</label>
     <select id="bicycle" name="bicycleModel" required>
       <option value="" disabled selected>Select a bicycle</option>
       <option th:each="bicycle : ${bicycles}" th:value="${bicycle.model}" th:text="${bicycle.model}"></option>

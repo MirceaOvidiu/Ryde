@@ -57,4 +57,9 @@ public class BicycleServiceImplementation implements BicycleService {
     public Bicycle getBicycleByModel(String model) {
         return bicycleRepository.findBicycleByModel(model);
     }
+
+    @Override
+    public List<Bicycle> findAvailableBicycles() {
+        return bicycleRepository.findAvailableBicycles();
+    }
 }

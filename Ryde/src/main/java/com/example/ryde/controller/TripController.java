@@ -39,7 +39,7 @@ public class TripController {
 
     @GetMapping("/trip")
     public String getTrip(Model model) {
-        model.addAttribute("bicycles", bicycleService.getAllBicycles());
+        model.addAttribute("bicycles", bicycleService.findAvailableBicycles());
         model.addAttribute("dockingStations", dockingStationService.findAllDockingStations());
         return "trip";
     }
