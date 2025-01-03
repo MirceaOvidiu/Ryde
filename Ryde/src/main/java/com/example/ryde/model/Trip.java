@@ -7,23 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 @Entity
-@Table(name = "bicycle")
+@Table(name = "trip")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Bicycle implements Serializable {
+public class Trip implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String model;
-
-
-    @JoinColumn(name = "location")
-    private Long location;
-    private Float hourly_rate;
-    private Long occupied_by;
+    private Long customer;
+    private Long bicycle;
+    private Instant start_time;
+    private String start_location;
+    private Instant end_time;
+    private String end_location;
 }

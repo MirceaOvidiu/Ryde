@@ -21,6 +21,9 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             text-align: center;
             width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h2 {
             color: #333333;
@@ -37,6 +40,8 @@
             font-size: 1em;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
         }
         button:hover {
             background-color: #145a07;
@@ -48,6 +53,7 @@
     <h2>User Actions</h2>
     <button onclick="location.href='/userDetails'">See User Details</button>
     <button onclick="location.href='/bicycles'">See Available Bicycles</button>
+    <button onclick="location.href='/trip'">Go on a trip</button>
     <button onclick="location.href='/logout'">Logout</button>
 </div>
 </body>

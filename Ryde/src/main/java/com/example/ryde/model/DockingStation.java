@@ -9,21 +9,23 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "bicycle")
+@Table(name="docking_station")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Bicycle implements Serializable {
+public class DockingStation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String model;
 
+    @Column(name = "available_bicycles")
+    private int available_bicycles;
 
-    @JoinColumn(name = "location")
-    private Long location;
-    private Float hourly_rate;
-    private Long occupied_by;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "location")
+    private String location;
 }

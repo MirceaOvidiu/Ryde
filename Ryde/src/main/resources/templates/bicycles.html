@@ -68,19 +68,17 @@
 </head>
 <body>
 <div class="bicycles-container">
-    <h2>Bicycle List</h2>
+    <h2>Bicycles Status</h2>
     <div th:if="${bicycles != null}">
         <table>
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Model</th>
                 <th>Status</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="bicycle : ${bicycles}">
-                <td th:text="${bicycle.id}"></td>
                 <td th:text="${bicycle.model}"></td>
                 <td>
                     <form th:if="${bicycle.occupied_by == null}" th:action="@{/reserveBicycle}" method="post">

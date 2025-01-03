@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Start Your Trip</h2>
+  <form action="/startTrip" method="post" onsubmit="document.getElementById('startTime').value = new Date().toISOString(); showEndDockingStation(); return false;">
+    <label for="dockingStation">Choose a starting docking station:</label>
+    <select id="dockingStation" name="dockingStation">
+      <option th:each="station : ${dockingStations}" th:value="${station.name}" th:text="${station.name}"></option>
+    </select>
+    <label for="bicycle">Choose a bicycle:</label>
+    <select id="bicycle" name="bicycleModel">
+      <option th:each="bicycle : ${bicycles}" th:value="${bicycle.model}" th:text="${bicycle.model}"></option>
+    </select>
+    <input type="hidden" id="startTime" name="startTime" value="" />
+    <button type="submit">Start Trip</button>
+  </form>
+</div>
+
+<div id="endDockingStationContainer">
+  <h2>End Your Trip</h2>
+  <div>
+    <label>Time Elapsed: <span id="clock">00:00:00</span></label>
+  </div>
+  <form action="/endTrip" method="post" onsubmit="stopClock();">
+    <label for="endDockingStation">Choose an ending docking station:</label>
+    <select id="endDockingStation" name="endLocation">
+      <option th:each="station : ${dockingStations}" th:value="${station.name}" th:text="${station.name}"></option>
+    </select>
+    <button type="submit">End Trip</button>
+  </form>
+</div>

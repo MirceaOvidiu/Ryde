@@ -52,4 +52,9 @@ public class BicycleServiceImplementation implements BicycleService {
         // return bicycleRepository.findAll(); default method
         return bicycleRepository.findAllBicycles(); // using select b from Bicycle b query
     }
+
+    @Override
+    public Bicycle getBicycleByModel(String model) {
+        return bicycleRepository.findBicycleByModel(model);
+    }
 }

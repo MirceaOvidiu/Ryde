@@ -38,4 +38,6 @@ public class UserActionsController {
             return "redirect:/index";
         }
     }
+
+
 }
