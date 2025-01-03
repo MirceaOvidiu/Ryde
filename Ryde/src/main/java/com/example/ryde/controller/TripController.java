@@ -1,12 +1,13 @@
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;
+import com.example.ryde.model.Bicycle;
 import com.example.ryde.model.DockingStation;
 import com.example.ryde.model.Trip;
-import com.example.ryde.repository.TripRepository;
 import com.example.ryde.service.TripService;
 import com.example.ryde.service.BicycleService;
 import com.example.ryde.service.DockingStationService;
+import org.springframework.jdbc.core.JdbcTemplate;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,15 @@ public class TripController {
     private final BicycleService bicycleService;
     private final DockingStationService dockingStationService;
     private final TripService tripService;
-    private final TripRepository tripRepository;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public TripController(BicycleService bicycleService, DockingStationService dockingStationService, TripService tripService, TripRepository tripRepository) {
+    public TripController(BicycleService bicycleService, DockingStationService dockingStationService,
+                          TripService tripService, JdbcTemplate jdbcTemplate) {
         this.bicycleService = bicycleService;
         this.dockingStationService = dockingStationService;
         this.tripService = tripService;
-        this.tripRepository = tripRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @GetMapping("/trip")
@@ -70,6 +72,12 @@ public class TripController {
 
         session.setAttribute("currentTrip", trip);
 
+        // mark the bicycle as occupied
+        Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+        String updateQuery = "UPDATE bicycle SET occupied_by = ? WHERE id = ?";
+        jdbcTemplate.update(updateQuery, userDto.getId(), bicycle.getId());
+        session.setAttribute("reservedBicycleId", bicycleId);
+
         return "redirect:/trip";
     }
 
@@ -87,6 +95,12 @@ public class TripController {
         trip.setEnd_location(endDockingStation.getName());
 
         tripService.saveTrip(trip);
+
+        // mark the bicycle as unoccupied
+        Long bicycleId = trip.getBicycle();
+        Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
+        String updateQuery = "UPDATE bicycle SET occupied_by = NULL WHERE id = ?";
+        jdbcTemplate.update(updateQuery, bicycle.getId());
 
         session.removeAttribute("currentTrip");
 

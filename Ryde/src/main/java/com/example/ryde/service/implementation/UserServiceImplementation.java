@@ -26,8 +26,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto getMyUserById(Long id) {
-        // MyUser user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-
         String sql = "SELECT * FROM \"user\" WHERE id = ?";
         MyUser user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             MyUser Usr = new MyUser();

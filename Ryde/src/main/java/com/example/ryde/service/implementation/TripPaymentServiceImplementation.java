@@ -19,8 +19,8 @@ public class TripPaymentServiceImplementation implements TripPaymentService {
     }
 
     @Override
-    public TripPayment saveTripPayment(TripPayment tripPayment) {
-        return tripPaymentRepository.save(tripPayment);
+    public void saveTripPayment(TripPayment tripPayment) {
+        tripPaymentRepository.save(tripPayment);
     }
 
     @Override

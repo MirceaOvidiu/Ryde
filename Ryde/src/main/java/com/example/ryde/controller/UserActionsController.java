@@ -1,7 +1,6 @@
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;
-import com.example.ryde.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Controller
 public class UserActionsController {
 
-    public UserActionsController(UserService userService) {
-    }
+    public UserActionsController() {}
 
     @GetMapping("/userActions")
     public String showUserActionsPage(Model model) {
@@ -38,6 +36,4 @@ public class UserActionsController {
             return "redirect:/index";
         }
     }
-
-
 }

@@ -4,7 +4,6 @@ import com.example.ryde.model.DockingStation;
 import com.example.ryde.service.DockingStationService;
 import com.example.ryde.repository.DockingStationRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 

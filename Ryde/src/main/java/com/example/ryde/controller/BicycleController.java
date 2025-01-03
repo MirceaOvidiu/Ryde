@@ -3,7 +3,6 @@ package com.example.ryde.controller;
 import com.example.ryde.dto.UserDto;
 import com.example.ryde.model.Bicycle;
 import com.example.ryde.service.BicycleService;
-import com.example.ryde.service.DockingStationService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
@@ -24,7 +23,7 @@ public class BicycleController {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BicycleController(DockingStationService dockingStationService, BicycleService bicycleService, DataSource dataSource) {
+    public BicycleController(BicycleService bicycleService, DataSource dataSource) {
         this.bicycleService = bicycleService;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
