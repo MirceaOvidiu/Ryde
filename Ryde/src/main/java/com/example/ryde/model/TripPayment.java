@@ -21,7 +21,9 @@ public class TripPayment implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Long trip_id;
+    private Long userId;
     private Instant payment_date;
     private Double amount;
     private String iban;
+    private Boolean paid;
 }

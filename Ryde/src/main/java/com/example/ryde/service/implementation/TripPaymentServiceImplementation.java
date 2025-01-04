@@ -29,7 +29,12 @@ public class TripPaymentServiceImplementation implements TripPaymentService {
     }
 
     @Override
-    public TripPayment getTripPaymentById(Long id) {
+    public TripPayment getPaymentById(Long id) {
         return tripPaymentRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<TripPayment> getPaymentByUserId(Long userId) {
+        return tripPaymentRepository.findByUserId(userId);
     }
 }

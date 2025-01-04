@@ -7,5 +7,6 @@ import java.util.List;
 public interface TripPaymentService {
     void saveTripPayment(TripPayment tripPayment);
     List<TripPayment> getAllTripPayments();
-    TripPayment getTripPaymentById(Long id);
+    TripPayment getPaymentById(Long id);
+    List<TripPayment> getPaymentByUserId(Long userId);
 }
