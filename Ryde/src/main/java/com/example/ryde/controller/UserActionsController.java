@@ -15,7 +15,7 @@ public class UserActionsController {
     @GetMapping("/userActions")
     public String showUserActionsPage(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "userActions";
+        return "userPanel";
     }
 
     @GetMapping("/logout")

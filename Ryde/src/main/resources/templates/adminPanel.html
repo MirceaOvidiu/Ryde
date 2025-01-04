@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Actions</title>
+    <title>Admin Panel</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f0f8ff, #199d0b);
+            background: linear-gradient(135deg, #f0f8ff, #0073e6);
             margin: 0;
             padding: 0;
             display: flex;
@@ -31,7 +31,7 @@
             margin-bottom: 20px;
         }
         button {
-            background-color: #199d0b;
+            background-color: #0b2d9d;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -44,18 +44,15 @@
             max-width: 300px;
         }
         button:hover {
-            background-color: #145a07;
+            background-color: #07155a;
         }
     </style>
 </head>
 <body>
 <div class="actions-container">
-    <h2>User Actions</h2>
-    <button onclick="location.href='/userDetails'">See User Details</button>
-    <button onclick="location.href='/bicycles'">See Available Bicycles</button>
-    <button onclick="location.href='/trip'">Go on a trip</button>
-    <button onclick="location.href='/tripHistory'">Trip History</button>
-    <button onclick="location.href='/paymentHistory'">Payment History</button>
+    <h2>AdminPanel</h2>
+    <button onclick="location.href='/bicycles'">Bicycle Status</button>
+    <button onclick="location.href='/seeUsers'">Users</button>
     <button onclick="location.href='/logout'">Logout</button>
 </div>
 </body>

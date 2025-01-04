@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImplementation implements UserService {
@@ -24,6 +26,25 @@ public class UserServiceImplementation implements UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
+    public List<UserDto> getAllUsers() {
+        String sql = "SELECT * FROM \"user\"";
+        List<MyUser> users = jdbcTemplate.query(sql, (rs, rowNum) -> {
+            MyUser user = new MyUser();
+            user.setId(rs.getLong("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setRole(rs.getString("role"));
+            user.setIban(rs.getString("iban"));
+            user.setEmail(rs.getString("email"));
+            return user;
+        });
+
+        return users.stream()
+                .map(UserMapper::mapToUserDto)
+                .collect(Collectors.toList());
+    }
+        
     @Override
     public UserDto getMyUserById(Long id) {
         String sql = "SELECT * FROM \"user\" WHERE id = ?";

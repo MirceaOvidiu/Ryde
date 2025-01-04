@@ -36,6 +36,11 @@ public class LoginController {
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             attr.getRequest().getSession(true).setAttribute("currentUser", userDto);
             model.addAttribute("user", userDto);
+
+            if ("ADMIN".equals(userDto.getRole())) {
+                return "redirect:/adminPanel";
+            }
+
             return "redirect:/userActions";
         } catch (RuntimeException e) {
             model.addAttribute("error", "Invalid username or password");
