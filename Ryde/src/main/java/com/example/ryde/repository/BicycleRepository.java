@@ -1,3 +1,8 @@
+/** BicycleRepository interface
+ * @author Dodi Mircea Ovidiu
+ * @version 20 Nov 2024
+ */
+
 package com.example.ryde.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;

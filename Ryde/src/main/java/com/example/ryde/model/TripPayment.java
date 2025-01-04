@@ -1,3 +1,9 @@
+/** Trip payment entity class.
+ * @author Dodi Mircea Ovidiu
+ * @version 2 Jan 2025
+ */
+
+
 package com.example.ryde.model;
 
 import jakarta.persistence.*;

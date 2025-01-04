@@ -1,3 +1,8 @@
+/** spooler class for the application
+ * @author Dodi Mircea Ovidiu
+ * @version 11 oct 2024
+ */
+
 package com.example.ryde;
 
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,13 @@
+/** Data Source Configuration Class
+ * @author Dodi Mircea Ovidiu
+ * @version 22 Dec 2024
+ */
+
 package com.example.ryde.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 

@@ -1,3 +1,8 @@
+/** Data transfer object class for user fields
+ * @author Dodi Mircea Ovidiu
+ * @version 20 11 2024
+ */
+
 package com.example.ryde.dto;
 
 import lombok.Getter;

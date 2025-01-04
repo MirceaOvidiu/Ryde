@@ -1,3 +1,8 @@
+/** Controller class for operations that might be performed in the user panel.
+ * @author Dodi Mircea Ovidiu
+ * @version 30 nov 2024
+ */
+
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;

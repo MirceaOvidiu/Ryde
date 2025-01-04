@@ -1,6 +1,13 @@
+/** implementation class for the TripPaymentService interface
+ * @author Dodi Mircea Ovidiu
+ * @version 2 Jan 2025
+ */
+
 package com.example.ryde.service.implementation;
 
+import com.example.ryde.dto.UserTripMetricsDTO;
 import com.example.ryde.model.TripPayment;
+import com.example.ryde.dto.PaymentMetricDTO;
 import com.example.ryde.repository.TripPaymentRepository;
 import com.example.ryde.service.TripPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +43,14 @@ public class TripPaymentServiceImplementation implements TripPaymentService {
     @Override
     public List<TripPayment> getPaymentByUserId(Long userId) {
         return tripPaymentRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<PaymentMetricDTO> getPaymentMetrics(Long userId) { return tripPaymentRepository.findPaymentMetrics(userId);
+    }
+
+    @Override
+    public List<UserTripMetricsDTO> getUserPaymentMetrics(Long userId) {
+        return tripPaymentRepository.findUserTripMetrics(userId);
     }
 }

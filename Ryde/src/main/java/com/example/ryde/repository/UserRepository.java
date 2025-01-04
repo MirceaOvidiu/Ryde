@@ -1,3 +1,8 @@
+/** user repo interface
+ * @author Dodi Mircea Ovidiu
+ * @version 20 Nov 2025
+ */
+
 package com.example.ryde.repository;
 
 import com.example.ryde.model.MyUser;

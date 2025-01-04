@@ -1,3 +1,8 @@
+/** Controller class for the welcome page.
+ * @author Dodi Mircea Ovidiu
+ * @version 10 Nov 2024
+ */
+
 package com.example.ryde.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;

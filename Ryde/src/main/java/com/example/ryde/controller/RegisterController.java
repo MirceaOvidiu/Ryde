@@ -1,3 +1,8 @@
+/** Controller class for user registration.
+ * @author Dodi Mircea Ovidiu
+ * @version 15 Nov 2024
+ */
+
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;

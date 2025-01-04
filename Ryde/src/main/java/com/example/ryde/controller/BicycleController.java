@@ -1,3 +1,8 @@
+/** Controller class for bicycle-related operations.
+ * @author Dodi Mircea Ovidiu
+ * @version 19 Dec 2024
+ */
+
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;

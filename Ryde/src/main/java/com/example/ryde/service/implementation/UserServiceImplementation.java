@@ -1,3 +1,8 @@
+/** implementation class for the userService interface
+ * @author Dodi Mircea Ovidiu
+ * @version 3 Jan 2025
+ */
+
 package com.example.ryde.service.implementation;
 
 import com.example.ryde.repository.UserRepository;

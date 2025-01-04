@@ -1,3 +1,8 @@
+/** implementation class for the BicycleService interface
+ * @author Dodi Mircea Ovidiu
+ * @version 2 Jan 2025
+ */
+
 package com.example.ryde.service.implementation;
 
 import com.example.ryde.model.Bicycle;

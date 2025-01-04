@@ -1,8 +1,3 @@
-/** Data transfer object class for login info.
- * @author Dodi Mircea Ovidiu
- * @version 20 11 2024
- */
-
 package com.example.ryde.dto;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
-    private String username;
-    private String password;
+public class UserTripMetricsDTO {
+    private Long userId;
+    private Integer totalTrips;
+    private Integer paidTrips;
+    private Integer unpaidTrips;
 }

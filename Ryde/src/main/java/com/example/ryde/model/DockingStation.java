@@ -1,3 +1,8 @@
+/** Docking Station entity class.
+ * @author Dodi Mircea Ovidiu
+ * @version 15 dec 2024
+ */
+
 package com.example.ryde.model;
 
 import jakarta.persistence.*;

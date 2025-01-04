@@ -1,3 +1,8 @@
+/** Controller class for trip history-related operations.
+ * @author Dodi Mircea Ovidiu
+ * @version 4 Jan 2025
+ */
+
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;
