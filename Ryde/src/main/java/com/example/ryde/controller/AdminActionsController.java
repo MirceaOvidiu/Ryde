@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
@@ -70,11 +71,21 @@ public class AdminActionsController {
         if (userId != null) {
             List<PaymentMetricDTO> paymentMetrics = paymentService.getPaymentMetrics(userId);
             List<UserTripMetricsDTO> userTripMetrics = paymentService.getUserPaymentMetrics(userId);
+
             model.addAttribute("userTripMetrics", userTripMetrics);
             model.addAttribute("paymentMetrics", paymentMetrics);
             model.addAttribute("userId", userId);
         }
 
+        List<Object[]> usersWithMostUnpaidTrips = paymentService.findUserWithMostUnpaidTrips();
+        model.addAttribute("usersWithMostUnpaidTrips", usersWithMostUnpaidTrips);
+
         return "paymentMetrics";
+    }
+
+    @GetMapping("/deleteUser/{userId}")
+    public String deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return "redirect:/users";
     }
 }

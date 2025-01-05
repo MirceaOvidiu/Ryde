@@ -70,6 +70,15 @@ public class UserServiceImplementation implements UserService {
         return UserMapper.mapToUserDto(user);
     }
 
+    @Override
+    public void deleteUser(Long id) {
+        String sql = "DELETE FROM \"user\" WHERE id = ?";
+        int rows = jdbcTemplate.update(sql, id);
+        if (rows == 0) {
+            throw new RuntimeException("User not found");
+        }
+    }
+
     public UserDto loginUser(LoginDto loginDto) {
         String sql = "SELECT * FROM \"user\" WHERE username = ?";
 

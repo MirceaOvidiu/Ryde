@@ -22,6 +22,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 
+
 public class TripPayment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

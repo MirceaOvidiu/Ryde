@@ -20,4 +20,5 @@ public interface TripPaymentService {
     List<TripPayment> getPaymentByUserId(Long userId);
     List<PaymentMetricDTO> getPaymentMetrics(Long UserId);
     List<UserTripMetricsDTO> getUserPaymentMetrics(Long userId);
+    List<Object[]> findUserWithMostUnpaidTrips();
 }

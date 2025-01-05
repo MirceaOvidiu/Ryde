@@ -115,6 +115,21 @@
             </tr>
             </tbody>
         </table>
+        <h2>Users with Most Unpaid Trips</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>User Data</th>
+                <th>Unpaid Trip Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${usersWithMostUnpaidTrips}">
+                <td th:text="${user[0]}"></td>
+                <td th:text="${user[1]}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

@@ -34,4 +34,11 @@ public interface TripPaymentRepository extends JpaRepository<TripPayment, Long> 
             "WHERE tp.userId = :userId " +
             "GROUP BY tp.userId")
     List<UserTripMetricsDTO> findUserTripMetrics(Long userId);
+
+    @Query("SELECT u, COUNT(tp) as unpaidTripCount " +
+            "FROM MyUser u JOIN TripPayment tp ON u.id = tp.userId " +
+            "WHERE tp.paid = false " +
+            "GROUP BY u.id " +
+            "ORDER BY unpaidTripCount DESC")
+    List<Object[]> findUserWithMostUnpaidTrips();
 }
