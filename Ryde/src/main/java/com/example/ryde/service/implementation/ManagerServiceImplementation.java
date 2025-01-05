@@ -1,5 +1,6 @@
 package com.example.ryde.service.implementation;
 
+import com.example.ryde.dto.EmployeeByManagerDTO;
 import com.example.ryde.service.ManagerService;
 import com.example.ryde.model.Manager;
 import com.example.ryde.repository.ManagerRepository;
@@ -28,5 +29,10 @@ public class ManagerServiceImplementation implements ManagerService {
     @Override
     public void deleteManager(Long id) {
         managerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<EmployeeByManagerDTO> getEmployeesByManager() {
+        return managerRepository.findEmployeesByManager();
     }
 }

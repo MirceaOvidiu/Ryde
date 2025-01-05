@@ -5,6 +5,7 @@
 
 package com.example.ryde.controller;
 
+import com.example.ryde.dto.EmployeeByManagerDTO;
 import com.example.ryde.dto.UserDto;
 import com.example.ryde.dto.PaymentMetricDTO;
 import com.example.ryde.dto.UserTripMetricsDTO;
@@ -97,6 +98,8 @@ public class AdminActionsController {
     @GetMapping("/managers")
     public String showManagersPage(Model model) {
         List<Manager> managers = managerService.getAllManagers();
+        List<EmployeeByManagerDTO> employeesByManager = managerService.getEmployeesByManager();
+        model.addAttribute("employeesByManager", employeesByManager);
         model.addAttribute("managers", managers);
         model.addAttribute("manager", new Manager());
         return "managers";
@@ -137,4 +140,5 @@ public class AdminActionsController {
         employeeService.saveEmployee(employee);
         return "redirect:/employees";
     }
+
 }
