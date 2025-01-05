@@ -80,7 +80,8 @@
             dialog.classList.add('active');
             document.getElementById('confirm-delete').onclick = function() {
                 if (document.getElementById('confirm-checkbox').checked) {
-                    window.location.href = '/deleteUser/' + userId;
+                    document.getElementById('delete-form').action = '/deleteUser/' + userId;
+                    document.getElementById('delete-form').submit();
                 }
             };
         }
@@ -105,7 +106,6 @@
         </tr>
         </thead>
         <tbody>
-        <tbody>
         <tr th:each="user : ${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.username}"></td>
@@ -128,6 +128,7 @@
     <br>
     <button id="confirm-delete" class="delete-button">Confirm</button>
     <button onclick="closeConfirmationDialog()">Cancel</button>
+    <form id="delete-form" method="post" style="display: none;"></form>
 </div>
 </body>
 </html>

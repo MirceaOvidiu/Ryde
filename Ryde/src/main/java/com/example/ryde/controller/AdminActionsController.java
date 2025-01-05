@@ -8,17 +8,16 @@ package com.example.ryde.controller;
 import com.example.ryde.dto.UserDto;
 import com.example.ryde.dto.PaymentMetricDTO;
 import com.example.ryde.dto.UserTripMetricsDTO;
+import com.example.ryde.model.Employee;
+import com.example.ryde.model.Manager;
 import com.example.ryde.model.Trip;
 import com.example.ryde.model.TripPayment;
-import com.example.ryde.service.TripService;
-import com.example.ryde.service.TripPaymentService;
-import com.example.ryde.service.UserService;
+import com.example.ryde.service.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -27,12 +26,18 @@ public class AdminActionsController {
     private final UserService userService;
     private final TripService tripService;
     private final TripPaymentService paymentService;
+    private final ManagerService managerService;
+    private final EmployeeService employeeService;
 
-    public AdminActionsController(UserService userService, TripService tripService,
+
+    public AdminActionsController(UserService userService, TripService tripService, ManagerService managerService,
+                                  EmployeeService employeeService,
                                   @Qualifier("tripPaymentServiceImplementation")TripPaymentService paymentService) {
         this.tripService = tripService;
         this.userService = userService;
         this.paymentService = paymentService;
+        this.managerService = managerService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/adminPanel")
@@ -41,7 +46,7 @@ public class AdminActionsController {
         return "adminPanel";
     }
 
-    @GetMapping("/seeUsers")
+    @GetMapping("/users")
     public String showUsersPage(Model model) {
         List<UserDto> users = userService.getAllUsers();
         model.addAttribute("users", users);
@@ -83,9 +88,53 @@ public class AdminActionsController {
         return "paymentMetrics";
     }
 
-    @GetMapping("/deleteUser/{userId}")
+    @PostMapping("/deleteUser/{userId}")
     public String deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return "redirect:/users";
+    }
+
+    @GetMapping("/managers")
+    public String showManagersPage(Model model) {
+        List<Manager> managers = managerService.getAllManagers();
+        model.addAttribute("managers", managers);
+        model.addAttribute("manager", new Manager());
+        return "managers";
+    }
+
+    @PostMapping("/managers/save")
+    public String saveManager(@ModelAttribute("manager") Manager manager) {
+        managerService.saveManager(manager);
+        return "redirect:/managers";
+    }
+
+    @PostMapping("/managers/delete/{id}")
+    public String deleteManager(@PathVariable Long id) {
+        managerService.deleteManager(id);
+        return "redirect:/managers";
+    }
+
+    @GetMapping("/employees")
+    public String showEmployeesPage(Model model) {
+        model.addAttribute("employee", new Employee());
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+        List<Manager> managers = managerService.getAllManagers();
+        model.addAttribute("managers", managers);
+        return "employee";
+    }
+
+    @GetMapping("/employees/create")
+    public String showCreateEmployeeForm(Model model) {
+        model.addAttribute("employee", new Employee());
+        List<Manager> managers = managerService.getAllManagers();
+        model.addAttribute("managers", managers);
+        return "employee";
+    }
+
+    @PostMapping("/employees/save")
+    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+        employeeService.saveEmployee(employee);
+        return "redirect:/employees";
     }
 }

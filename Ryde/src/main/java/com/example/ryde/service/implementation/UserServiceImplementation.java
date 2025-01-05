@@ -118,8 +118,11 @@ public class UserServiceImplementation implements UserService {
         // SHA 256 hashing
         // In order to avoid the use of spring-security which forces request auth
         user.setPassword(hashPassword(user.getPassword()));
-        user.setId((UUID.randomUUID()).getLeastSignificantBits() & Long.MAX_VALUE);
+
+        // This type of id generation involves JavaScript problems while handling big numbers
+        // user.setId((UUID.randomUUID()).getLeastSignificantBits() & Long.MAX_VALUE);
         MyUser savedUser = userRepository.save(user);
+
         return UserMapper.mapToUserDto(savedUser);
     }
 
