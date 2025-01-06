@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.UUID;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,26 +47,6 @@ public class UserServiceImplementation implements UserService {
         return users.stream()
                 .map(UserMapper::mapToUserDto)
                 .collect(Collectors.toList());
-    }
-        
-    @Override
-    public UserDto getMyUserById(Long id) {
-        String sql = "SELECT * FROM \"user\" WHERE id = ?";
-        MyUser user = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            MyUser Usr = new MyUser();
-            Usr.setId(rs.getLong("id"));
-            Usr.setUsername(rs.getString("username"));
-            Usr.setPassword(rs.getString("password"));
-            Usr.setRole(rs.getString("role"));
-            Usr.setIban(rs.getString("iban"));
-            Usr.setEmail(rs.getString("email"));
-            return Usr;
-        }, id);
-
-        if (user == null) {
-            throw new RuntimeException("User not found");
-        }
-        return UserMapper.mapToUserDto(user);
     }
 
     @Override
