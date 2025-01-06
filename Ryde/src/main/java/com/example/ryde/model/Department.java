@@ -1,3 +1,8 @@
+/** Department model class
+ * @author Dodi Mircea Ovidiu
+ * @version 6 jan 2025
+ */
+
 package com.example.ryde.model;
 
 import jakarta.persistence.*;

@@ -1,3 +1,8 @@
+/** Repo class for interacting with the manager model.
+ * @author Dodi Mircea Ovidiu
+ * @version 6 jan 2025
+ */
+
 package com.example.ryde.repository;
 
 import com.example.ryde.dto.EmployeeByManagerDTO;

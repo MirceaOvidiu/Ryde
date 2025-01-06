@@ -1,4 +1,4 @@
-/** interface class for interacting with the tripService entity
+/** interface class for interacting with the Trip entity
  * @author Dodi Mircea Ovidiu
  * @version 3 Jan 2025
  */

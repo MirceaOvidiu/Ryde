@@ -1,4 +1,4 @@
-/** Bicycle entity class.
+/** employee entity class.
  * @author Dodi Mircea Ovidiu
  * @version 5 jan 2025
  */

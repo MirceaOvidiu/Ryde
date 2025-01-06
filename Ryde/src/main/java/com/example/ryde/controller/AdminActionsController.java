@@ -21,6 +21,8 @@ import java.util.List;
 @Controller
 public class AdminActionsController {
 
+    // could use Autowiring, but constructor injection is recommended security-wise
+
     private final UserService userService;
     private final TripService tripService;
     private final TripPaymentService paymentService;
@@ -38,12 +40,14 @@ public class AdminActionsController {
         this.employeeService = employeeService;
     }
 
+    // Only get mapping is used, as the admin panel is only for viewing
     @GetMapping("/adminPanel")
     public String showAdminPanel(Model model) {
         model.addAttribute("userDto", new UserDto());
         return "adminPanel";
     }
 
+    // Same for the /users route
     @GetMapping("/users")
     public String showUsersPage(Model model) {
         List<UserDto> users = userService.getAllUsers();
@@ -68,6 +72,7 @@ public class AdminActionsController {
     @GetMapping("/seePayments")
     public String showPaymentsPage(Model model) {
         List<TripPayment> payments = paymentService.getAllTripPayments();
+        // round the amount to 2 decimal places
         payments.forEach(payment -> payment.setAmount(Math.round(payment.getAmount() * 100.0) / 100.0));
         model.addAttribute("tripPayments", payments);
         return "paymentHistory";
@@ -78,6 +83,7 @@ public class AdminActionsController {
         List<UserDto> users = userService.getAllUsers();
         model.addAttribute("users", users);
 
+        // only if a user is selected
         if (userId != null) {
             List<PaymentMetricDTO> paymentMetrics = paymentService.getPaymentMetrics(userId);
             List<UserTripMetricsDTO> userTripMetrics = paymentService.getUserPaymentMetrics(userId);
@@ -87,6 +93,7 @@ public class AdminActionsController {
             model.addAttribute("userId", userId);
         }
 
+        // work regardless of user id
         List<Object[]> usersWithMostSpent = paymentService.findUserSpendingOnTrips();
         List<Object[]> usersWithMostUnpaidTrips = paymentService.findUserWithMostUnpaidTrips();
         List<String> usernamesForUnpaidTrips = paymentService.findUsernamesForUnpaidTrips();

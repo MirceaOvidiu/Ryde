@@ -1,3 +1,8 @@
+/** service interface for Employee entity
+ * @author Dodi Mircea Ovidiu
+ * @version 6 jan 2025
+ */
+
 package com.example.ryde.service;
 
 import com.example.ryde.model.Employee;

@@ -1,3 +1,8 @@
+/** DTO class for the query result.
+ * @author Dodi Mircea Ovidiu
+ * @version 6 jan 2025
+ */
+
 package com.example.ryde.dto;
 
 import lombok.Getter;

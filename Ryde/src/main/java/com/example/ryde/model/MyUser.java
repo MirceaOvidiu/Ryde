@@ -1,4 +1,4 @@
-/** Bicycle entity class.
+/** user entity class.
  * @author Dodi Mircea Ovidiu
  * @version 20 nov 2024
  */

@@ -1,4 +1,4 @@
-/** interface class for interacting with the TripPayment entity
+/** interface class for TripPayment related operations
  * @author Dodi Mircea Ovidiu
  * @version 5 Jan 2025
  */

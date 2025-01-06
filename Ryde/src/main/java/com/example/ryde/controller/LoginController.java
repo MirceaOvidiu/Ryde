@@ -42,6 +42,7 @@ public class LoginController {
             attr.getRequest().getSession(true).setAttribute("currentUser", userDto);
             model.addAttribute("user", userDto);
 
+            // maybe not the smartest way for admin logon, but it works
             if ("ADMIN".equals(userDto.getRole())) {
                 return "redirect:/adminPanel";
             }

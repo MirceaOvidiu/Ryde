@@ -1,4 +1,4 @@
-/** interface class for interacting with the User entity
+/** interface class for user related operations
  * @author Dodi Mircea Ovidiu
  * @version 25 nov 2024
  */
@@ -13,7 +13,6 @@ import java.util.List;
 public interface UserService {
     UserDto createUser(UserDto userDto);
     UserDto loginUser(LoginDto loginDto);
-    UserDto getMyUserById(Long id);
     List<UserDto> getAllUsers();
     void deleteUser(Long id);
 }

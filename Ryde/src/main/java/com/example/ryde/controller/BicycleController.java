@@ -46,9 +46,11 @@ public class BicycleController {
         UserDto userDto = (UserDto) session.getAttribute("currentUser");
         Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
 
+        // Update the bicycle's occupied_by field with the user's id
         String updateQuery = "UPDATE bicycle SET occupied_by = ? WHERE id = ?";
         jdbcTemplate.update(updateQuery, userDto.getId(), bicycle.getId());
         session.setAttribute("reservedBicycleId", bicycleId);
+
         return "redirect:/bicycles";
     }
 

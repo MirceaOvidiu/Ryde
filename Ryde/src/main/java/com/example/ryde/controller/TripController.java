@@ -67,10 +67,12 @@ public class TripController {
             return "redirect:/login";
         }
 
+        // user-related data
         Long customerId = userDto.getId();
         Long bicycleId = bicycleService.getBicycleByModel(bicycleModel).getId();
         DockingStation startLocation = dockingStationService.getDockingStationByName(dockingStation);
 
+        // create a new trip
         Trip trip = new Trip();
         trip.setCustomer(customerId);
         trip.setBicycle(bicycleId);
@@ -79,6 +81,7 @@ public class TripController {
 
         tripService.saveTrip(trip);
 
+        // save it in the session
         session.setAttribute("currentTrip", trip);
 
         // mark the bicycle as occupied
@@ -100,17 +103,19 @@ public class TripController {
 
         DockingStation endDockingStation = dockingStationService.getDockingStationByName(endLocation);
 
+        // get the trip from the session and update it
         trip.setEnd_time(Instant.now());
         trip.setEnd_location(endDockingStation.getName());
 
         tripService.saveTrip(trip);
 
-        // mark the bicycle as unoccupied
+        // mark the bicycle as unoccupied after trip completion
         Long bicycleId = trip.getBicycle();
         Bicycle bicycle = bicycleService.getBicycleById(bicycleId);
         String updateQuery = "UPDATE bicycle SET occupied_by = NULL WHERE id = ?";
         jdbcTemplate.update(updateQuery, bicycle.getId());
 
+        // Create a trip payment entry. It will be fully populated when the user pays for the trip.
         TripPayment tripPayment = new TripPayment();
         tripPayment.setTrip_id(trip.getId());
         tripPayment.setUserId(trip.getCustomer());
@@ -122,6 +127,7 @@ public class TripController {
 
         tripPaymentService.saveTripPayment(tripPayment);
 
+        // remove the trip from the session
         session.removeAttribute("currentTrip");
 
         return "redirect:/userActions";

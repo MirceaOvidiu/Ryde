@@ -38,6 +38,7 @@ public class TripPaymentController {
         }
 
         List<TripPayment> tripPayments = tripPaymentService.getPaymentByUserId(userId);
+        // Round the amount to 2 decimal places
         tripPayments.forEach(payment -> payment.setAmount(Math.round(payment.getAmount() * 100.0) / 100.0));
         model.addAttribute("tripPayments", tripPayments);
         return "paymentHistory";
@@ -51,6 +52,7 @@ public class TripPaymentController {
             return "redirect:/login";
         }
 
+        // add the remaining payment details upon payment
         TripPayment tripPayment = tripPaymentService.getPaymentById(paymentId);
         tripPayment.setIban(userDto.getIban());
         tripPayment.setPaid(true);

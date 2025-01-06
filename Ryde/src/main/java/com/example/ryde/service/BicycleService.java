@@ -1,4 +1,4 @@
-/** interface class for interacting with the Bicycle entity
+/** service interface for bicycle related operations
  * @author Dodi Mircea Ovidiu
  * @version 3 Jan 2025
  */
