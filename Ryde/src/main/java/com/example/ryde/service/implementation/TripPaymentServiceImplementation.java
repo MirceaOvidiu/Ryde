@@ -53,8 +53,12 @@ public class TripPaymentServiceImplementation implements TripPaymentService {
     public List<UserTripMetricsDTO> getUserPaymentMetrics(Long userId) {return tripPaymentRepository.findUserTripMetrics(userId);}
 
     @Override
-    public List<Object[]> findUserWithMostUnpaidTrips() {
-        return tripPaymentRepository.findUserWithMostUnpaidTrips();
-    }
+    public List<Object[]> findUserWithMostUnpaidTrips() { return tripPaymentRepository.findUserWithMostUnpaidTrips();}
+
+    @Override
+    public List<Object[]> findUserSpendingOnTrips() { return tripPaymentRepository.findUserSpendingOnTrips();}
+
+    @Override
+    public List<String> findUsernamesForUnpaidTrips() { return tripPaymentRepository.findUsernamesForUnpaidTrips(); }
 
 }

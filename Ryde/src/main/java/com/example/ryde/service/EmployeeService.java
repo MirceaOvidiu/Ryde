@@ -9,4 +9,5 @@ import java.util.List;
 public interface EmployeeService {
     void saveEmployee(Employee employee);
     List<Employee> getAllEmployees();
+    List<Object[]> findEmployeesWithManagerNames();
 }

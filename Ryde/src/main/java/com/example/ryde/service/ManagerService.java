@@ -1,6 +1,7 @@
 package com.example.ryde.service;
 
 import com.example.ryde.dto.EmployeeByManagerDTO;
+import com.example.ryde.model.Employee;
 import com.example.ryde.model.Manager;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,8 @@ public interface ManagerService {
     List<Manager> getAllManagers();
     void deleteManager(Long id);
     List<EmployeeByManagerDTO> getEmployeesByManager();
+    List<Object[]> DepartmentsByAvgSalary();
+    List<Employee> getEmployeesWithLowerSalaryThanITDepartment();
+    List<Employee> getEmployeesWithHigherSalaryThanHRDepartment();
+    List<Object[]> sortDepartmentsByNrOfEmployees();
 }

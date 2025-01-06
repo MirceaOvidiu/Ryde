@@ -91,17 +91,19 @@
         <th>Surname</th>
         <th>Department</th>
         <th>Salary</th>
-        <th>Manager</th>
+        <th>Manager Name</th>
+        <th>Manager Surname</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="employee : ${employees}">
-        <td th:text="${employee.id}"></td>
-        <td th:text="${employee.name}"></td>
-        <td th:text="${employee.surname}"></td>
-        <td th:text="${employee.department}"></td>
-        <td th:text="${employee.salary}"></td>
-        <td th:text="${employee.manager}"></td>
+    <tr th:each="employee : ${employeesWithManagerNames}">
+        <td th:text="${employee[0]}"></td>
+        <td th:text="${employee[1]}"></td>
+        <td th:text="${employee[2]}"></td>
+        <td th:text="${employee[3]}"></td>
+        <td th:text="${employee[4]}"></td>
+        <td th:text="${employee[5]}"></td>
+        <td th:text="${employee[6]}"></td>
     </tr>
     </tbody>
 </table>

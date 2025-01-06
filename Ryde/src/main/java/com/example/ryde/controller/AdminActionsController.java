@@ -5,10 +5,7 @@
 
 package com.example.ryde.controller;
 
-import com.example.ryde.dto.EmployeeByManagerDTO;
-import com.example.ryde.dto.UserDto;
-import com.example.ryde.dto.PaymentMetricDTO;
-import com.example.ryde.dto.UserTripMetricsDTO;
+import com.example.ryde.dto.*;
 import com.example.ryde.model.Employee;
 import com.example.ryde.model.Manager;
 import com.example.ryde.model.Trip;
@@ -56,9 +53,16 @@ public class AdminActionsController {
 
     @GetMapping("/seeTrips")
     public String showTripsPage(Model model) {
-        List<Trip> trips = tripService.findAllTrips();
+        List<Trip> trips = tripService.findAll();
         model.addAttribute("trips", trips);
         return "tripHistory";
+    }
+
+    @GetMapping("/tripLocations")
+    public String showTripLocationsPage(Model model) {
+        List<Object[]> tripLocations = tripService.findAllTrips();
+        model.addAttribute("tripLocations", tripLocations);
+        return "tripLocations";
     }
 
     @GetMapping("/seePayments")
@@ -83,8 +87,13 @@ public class AdminActionsController {
             model.addAttribute("userId", userId);
         }
 
+        List<Object[]> usersWithMostSpent = paymentService.findUserSpendingOnTrips();
         List<Object[]> usersWithMostUnpaidTrips = paymentService.findUserWithMostUnpaidTrips();
+        List<String> usernamesForUnpaidTrips = paymentService.findUsernamesForUnpaidTrips();
+
         model.addAttribute("usersWithMostUnpaidTrips", usersWithMostUnpaidTrips);
+        model.addAttribute("userSpendingOnTrips", usersWithMostSpent);
+        model.addAttribute("usernamesForUnpaidTrips", usernamesForUnpaidTrips);
 
         return "paymentMetrics";
     }
@@ -122,6 +131,10 @@ public class AdminActionsController {
         model.addAttribute("employee", new Employee());
         List<Employee> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
+
+        List<Object[]> employeesWithManagerNames = employeeService.findEmployeesWithManagerNames();
+        model.addAttribute("employeesWithManagerNames", employeesWithManagerNames);
+
         List<Manager> managers = managerService.getAllManagers();
         model.addAttribute("managers", managers);
         return "employee";
@@ -141,4 +154,17 @@ public class AdminActionsController {
         return "redirect:/employees";
     }
 
+    @GetMapping("/payrollMetrics")
+    public String getPayrollMetrics(Model model) {
+        model.addAttribute("departments", managerService.DepartmentsByAvgSalary());
+        model.addAttribute("employees", managerService.getEmployeesWithLowerSalaryThanITDepartment());
+        model.addAttribute("employees2", managerService.getEmployeesWithHigherSalaryThanHRDepartment());
+        return "payrollMetrics";
+    }
+
+    @GetMapping("/departmentMetrics")
+    public String getDepartmentMetrics(Model model) {
+        model.addAttribute("departments", managerService.sortDepartmentsByNrOfEmployees());
+        return "departmentMetrics";
+    }
 }

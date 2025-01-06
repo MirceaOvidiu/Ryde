@@ -29,12 +29,17 @@ public class TripServiceImplementation implements TripService {
     }
 
     @Override
-    public List<Trip> findAllTrips() {
-        return tripRepository.findAll();
+    public List<Object[]> findAllTrips() {
+        return tripRepository.findAllTrips();
     }
 
     @Override
     public List<Trip> getTripsByCustomer(Long customerId) {
         return tripRepository.findByCustomer(customerId);
+    }
+
+    @Override
+    public List<Trip> findAll() {
+        return tripRepository.findAll();
     }
 }

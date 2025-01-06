@@ -18,9 +18,6 @@ public interface BicycleRepository extends JpaRepository<Bicycle, Long> {
 
     Bicycle findBicycleById(Long id);
 
-    @Query("SELECT b FROM Bicycle b JOIN FETCH b.location")
-    List<Bicycle> findAllBicyclesByLocation();
-
     @Query("SELECT b FROM Bicycle b WHERE b.occupied_by IS NULL")
     List<Bicycle> findAvailableBicycles();
 

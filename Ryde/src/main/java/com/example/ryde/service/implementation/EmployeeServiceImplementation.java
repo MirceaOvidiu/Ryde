@@ -24,4 +24,9 @@ public class EmployeeServiceImplementation implements EmployeeService {
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
+
+    @Override
+    public List<Object[]> findEmployeesWithManagerNames() {
+        return employeeRepository.findEmployeesWithManagerNames();
+    }
 }

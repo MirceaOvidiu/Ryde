@@ -41,4 +41,16 @@ public interface TripPaymentRepository extends JpaRepository<TripPayment, Long> 
             "GROUP BY u.id " +
             "ORDER BY unpaidTripCount DESC")
     List<Object[]> findUserWithMostUnpaidTrips();
+
+    @Query("SELECT u, SUM(tp.amount) as totalSpent " +
+            "FROM MyUser u JOIN TripPayment tp ON u.id = tp.userId " +
+            "GROUP BY u.id " +
+            "ORDER BY totalSpent DESC")
+    List<Object[]> findUserSpendingOnTrips();
+
+    @Query(value = "SELECT DISTINCT u.username " +
+            "FROM trip_payment tp " +
+            "JOIN \"user\" u ON tp.user_id = u.id " +
+            "WHERE tp.trip_id IN (SELECT t.id FROM trip t WHERE tp.paid = false)", nativeQuery = true)
+    List<String> findUsernamesForUnpaidTrips();
 }

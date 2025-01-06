@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface TripService {
     void saveTrip(Trip trip);
-    List<Trip> findAllTrips();
+    List<Object[]> findAllTrips();
     List<Trip> getTripsByCustomer(Long customerId);
+    List<Trip> findAll();
 }

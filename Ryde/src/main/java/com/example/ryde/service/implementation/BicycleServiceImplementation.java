@@ -28,15 +28,6 @@ public class BicycleServiceImplementation implements BicycleService {
          return bicycleRepository.findBicycleById(id);
     }
 
-    public void reserveBicycle(Bicycle bicycle, Long id) {
-        bicycle.setOccupied_by(id);
-}
-
-    @Override
-    public void saveBicycle(Bicycle bicycle) {
-        bicycleRepository.save(bicycle);
-    }
-
     @Override
     public List<Bicycle> getAllBicycles() {
         // return bicycleRepository.findAll(); default method

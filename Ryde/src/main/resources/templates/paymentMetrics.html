@@ -69,7 +69,50 @@
 </head>
 <body>
 <div class="metrics-container">
-    <h1>Payment Metrics</h1>
+    <h2>Users with Most Unpaid Trips</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>User Data</th>
+            <th>Unpaid Trip Count</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersWithMostUnpaidTrips}">
+            <td th:text="${user[0]}"></td>
+            <td th:text="${user[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Users with unpaid trips</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Users with unpaid trips:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="username : ${usernamesForUnpaidTrips}">
+            <td th:text="${username}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Users by amount spent</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Total Spent</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${userSpendingOnTrips}">
+            <td th:text="${item[0]}"></td>
+            <td th:text="${item[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Payment Metrics</h2>
     <form class="filter-form" th:action="@{/paymentMetrics}" method="get">
         <label>
             <select name="userId">
@@ -112,21 +155,6 @@
                 <td th:text="${metric.totalTrips}"></td>
                 <td th:text="${metric.paidTrips}"></td>
                 <td th:text="${metric.unpaidTrips}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <h2>Users with Most Unpaid Trips</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>User Data</th>
-                <th>Unpaid Trip Count</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user : ${usersWithMostUnpaidTrips}">
-                <td th:text="${user[0]}"></td>
-                <td th:text="${user[1]}"></td>
             </tr>
             </tbody>
         </table>
