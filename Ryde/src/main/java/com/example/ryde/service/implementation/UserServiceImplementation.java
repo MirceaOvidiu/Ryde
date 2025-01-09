@@ -5,14 +5,17 @@
 
 package com.example.ryde.service.implementation;
 
-import com.example.ryde.repository.UserRepository;
 import com.example.ryde.dto.LoginDto;
 import com.example.ryde.dto.UserDto;
 import com.example.ryde.mapper.UserMapper;
 import com.example.ryde.model.MyUser;
+import com.example.ryde.model.Trip;
+import com.example.ryde.model.TripPayment;
 import com.example.ryde.service.UserService;
+import jakarta.persistence.EntityManager;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -23,11 +26,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImplementation implements UserService {
     private final JdbcTemplate jdbcTemplate;
-    private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
-    public UserServiceImplementation(JdbcTemplate jdbcTemplate, UserRepository userRepository) {
+    public UserServiceImplementation(JdbcTemplate jdbcTemplate, EntityManager entityManager) {
         this.jdbcTemplate = jdbcTemplate;
-        this.userRepository = userRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -52,6 +55,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public void deleteUser(Long id) {
         String sql = "DELETE FROM \"user\" WHERE id = ?";
+
         int rows = jdbcTemplate.update(sql, id);
         if (rows == 0) {
             throw new RuntimeException("User not found");
@@ -84,27 +88,59 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto createUser(UserDto userDto) {
-        String sql = "SELECT COUNT(*) FROM \"user\" WHERE username = ?";
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, userDto.getUsername());
+        String checkSql = "SELECT COUNT(*) FROM \"user\" WHERE username = ?";
+        Integer count = jdbcTemplate.queryForObject(checkSql, Integer.class, userDto.getUsername());
 
         if (count > 0) {
             throw new RuntimeException("Username already exists");
         }
 
-        MyUser user = UserMapper.mapToUser(userDto);
-        user.setRole("USER");
-        // SHA 256 hashing
-        // In order to avoid the use of spring-security which forces request auth
-        user.setPassword(hashPassword(user.getPassword()));
+        MyUser userDTO = UserMapper.mapToUser(userDto);
+        userDTO.setRole("USER");
+        userDTO.setPassword(hashPassword(userDTO.getPassword()));
 
-        // This type of id generation involves JavaScript problems while handling big numbers
-        // user.setId((UUID.randomUUID()).getLeastSignificantBits() & Long.MAX_VALUE);
-        MyUser savedUser = userRepository.save(user);
+        ///  SQL insert for the user
+        String insertSql = "INSERT INTO \"user\" (username, password, email, iban, role) " +
+                "VALUES (:username, :password, :email, :iban, :role)";
+        entityManager.createNativeQuery(insertSql)
+                .setParameter("username", userDTO.getUsername())
+                .setParameter("password", userDTO.getPassword())
+                .setParameter("email", userDTO.getEmail())
+                .setParameter("iban", userDTO.getIban())
+                .setParameter("role", userDTO.getRole())
+                .executeUpdate();
 
-        return UserMapper.mapToUserDto(savedUser);
+        return UserMapper.mapToUserDto(userDTO);
     }
 
+    @Transactional
+    public void forgetMe(Long id) {
+        // Find and delete trip payments
+        List<TripPayment> tripPayments = entityManager.createQuery("SELECT tp FROM TripPayment tp WHERE tp.userId= :userId", TripPayment.class)
+                .setParameter("userId", id)
+                .getResultList();
+        for (TripPayment tripPayment : tripPayments) {
+            entityManager.remove(tripPayment);
+        }
+
+        // Find and delete trips
+        List<Trip> trips = entityManager.createQuery("SELECT t FROM Trip t WHERE t.customer = :userId", Trip.class)
+                .setParameter("userId", id)
+                .getResultList();
+        for (Trip trip : trips) {
+            entityManager.remove(trip);
+        }
+
+        // Find and delete user
+        MyUser user = entityManager.find(MyUser.class, id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
+    }
+
+    ///  password hashing functions
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

@@ -15,4 +15,5 @@ public interface UserService {
     UserDto loginUser(LoginDto loginDto);
     List<UserDto> getAllUsers();
     void deleteUser(Long id);
+    void forgetMe(Long id);
 }

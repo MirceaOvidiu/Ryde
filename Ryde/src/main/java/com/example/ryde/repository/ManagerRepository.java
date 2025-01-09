@@ -29,16 +29,19 @@ public interface ManagerRepository extends JpaRepository<Manager, Long> {
             "ORDER BY avgSalary DESC")
     List<Object[]> findDepartmentsSortedByAverageSalary();
 
+    ///  complex query 3
     @Query("SELECT e " +
             "FROM Employee e " +
             "WHERE e.salary < ALL (SELECT it.salary FROM Employee it WHERE it.department = 'IT')")
     List<Employee> findEmployeesWithLowerSalaryThanITDepartment();
 
+    ///  complex query 4
     @Query("SELECT e " +
             "FROM Employee e " +
             "WHERE e.salary > ALL (SELECT hr.salary FROM Employee hr WHERE hr.department = 'HR')")
     List<Employee> findEmployeesWithHigherSalaryThanHRDepartment();
 
+    ///  complex query 5 to sort the departments by the number of employees
     @Query("SELECT d, (SELECT COUNT(e) FROM Employee e WHERE e.department = d.name) AS employeeCount " +
             "FROM Department d " +
             "ORDER BY (SELECT COUNT(e) FROM Employee e WHERE e.department = d.name) DESC")

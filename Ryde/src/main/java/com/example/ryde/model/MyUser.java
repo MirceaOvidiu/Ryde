@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Check;
+
 import java.io.Serializable;
 
 @Entity
@@ -18,6 +20,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Check(constraints = "role IN ('USER', 'ADMIN')")
 public class MyUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -38,13 +41,9 @@ public class MyUser implements Serializable {
 
     @Override
     public String toString() {
-        return "MyUser{" +
-                "id=" + id +
-                ", iban='" + iban + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", username='" + username + '\'' +
+        return "{" +
+                "username='" + username + '\'' +
+                " | email='" + email + '\'' +
                 '}';
     }
 }

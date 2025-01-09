@@ -6,16 +6,22 @@
 package com.example.ryde.controller;
 
 import com.example.ryde.dto.UserDto;
+import com.example.ryde.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Controller
 public class UserActionsController {
 
-    public UserActionsController() {}
+    private final UserService userService;
+
+    public UserActionsController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/userActions")
     public String showUserActionsPage(Model model) {
@@ -31,7 +37,7 @@ public class UserActionsController {
     }
 
     @GetMapping("/userDetails")
-    public String showUserDetailsPage(Model model){
+    public String showUserDetailsPage(Model model) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         UserDto userDto = (UserDto) attr.getRequest().getSession().getAttribute("currentUser");
         if (userDto != null) {
@@ -39,6 +45,24 @@ public class UserActionsController {
             return "userProfile";
         } else {
             return "redirect:/index";
+        }
+    }
+
+    @GetMapping("/forgetMe")
+    public String showForgetMePage(Model model) {
+        return "forgetMeConfirmation";
+    }
+
+    @PostMapping("/forgetMe")
+    public String forgetMe() {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        UserDto userDto = (UserDto) attr.getRequest().getSession().getAttribute("currentUser");
+        if (userDto != null) {
+            Long userId = userDto.getId();
+            userService.deleteUser(userId);
+            return "index";
+        } else {
+            return "redirect:/login";
         }
     }
 }

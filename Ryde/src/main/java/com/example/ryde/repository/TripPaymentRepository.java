@@ -19,7 +19,7 @@ import java.util.List;
 public interface TripPaymentRepository extends JpaRepository<TripPayment, Long> {
     List<TripPayment> findByUserId(Long userId);
 
-    /// Query to get the total amount of money spent by each user, along with their email
+    // Query to get the total amount of money spent by each user, along with their email
     @Query("SELECT new com.example.ryde.dto.PaymentMetricDTO(tp.userId, SUM(tp.amount), u.email) " +
             "FROM TripPayment tp JOIN MyUser u ON tp.userId = u.id " +
             "WHERE tp.userId = :userId " +
@@ -39,18 +39,23 @@ public interface TripPaymentRepository extends JpaRepository<TripPayment, Long> 
             "FROM MyUser u JOIN TripPayment tp ON u.id = tp.userId " +
             "WHERE tp.paid = false " +
             "GROUP BY u.id " +
+            "HAVING COUNT(tp) != 0 " +
             "ORDER BY unpaidTripCount DESC")
     List<Object[]> findUserWithMostUnpaidTrips();
 
-    @Query("SELECT u, SUM(tp.amount) as totalSpent " +
-            "FROM MyUser u JOIN TripPayment tp ON u.id = tp.userId " +
-            "GROUP BY u.id " +
-            "ORDER BY totalSpent DESC")
+    /// complex query 2 to get the users with the highest debt
+    @Query("SELECT u, (SELECT SUM(tp.amount) FROM TripPayment tp WHERE tp.userId = u.id AND tp.paid = false) as totalUnpaidSpent " +
+            "FROM MyUser u " +
+           //  "WHERE (SELECT SUM(tp.amount) FROM TripPayment tp WHERE tp.userId = u.id AND tp.paid = false) IS NOT NULL " +
+            "ORDER BY (SELECT SUM(tp.amount) FROM TripPayment tp WHERE tp.userId = u.id AND tp.paid = false) LIMIT 3")
     List<Object[]> findUserSpendingOnTrips();
 
+
+    ///  complex query 1 to get the usernames of the users who have unpaid trips
     @Query(value = "SELECT DISTINCT u.username " +
+            "FROM \"user\" u " +
+            "WHERE u.id IN (SELECT tp.user_id " +
             "FROM trip_payment tp " +
-            "JOIN \"user\" u ON tp.user_id = u.id " +
-            "WHERE tp.trip_id IN (SELECT t.id FROM trip t WHERE tp.paid = false)", nativeQuery = true)
+            "WHERE tp.trip_id IN (SELECT t.id FROM trip t WHERE tp.paid = false))", nativeQuery = true)
     List<String> findUsernamesForUnpaidTrips();
 }
