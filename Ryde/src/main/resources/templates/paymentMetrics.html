@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Payment Metrics</title>
+    <title>Metrici de Plată</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -73,12 +73,12 @@
 </head>
 <body>
 <div class="metrics-container">
-    <h2>Users with Most Unpaid Trips</h2>
+    <h2>Utilizatori cu cele mai multe călătorii neplătite</h2>
     <table>
         <thead>
         <tr>
-            <th>User Data</th>
-            <th>Unpaid Trip Count</th>
+            <th>Date Utilizator</th>
+            <th>Număr Călătorii Neplătite</th>
         </tr>
         </thead>
         <tbody>
@@ -88,11 +88,11 @@
         </tr>
         </tbody>
     </table>
-    <h2>Users with unpaid trips</h2>
+    <h2>Utilizatori cu călătorii neplătite</h2>
     <table>
         <thead>
         <tr>
-            <th>Users with unpaid trips:</th>
+            <th>Utilizatori cu călătorii neplătite:</th>
         </tr>
         </thead>
         <tbody>
@@ -101,12 +101,12 @@
         </tr>
         </tbody>
     </table>
-    <h2>Users by debt</h2>
+    <h2>Utilizatori după datorie</h2>
     <table>
         <thead>
         <tr>
-            <th>User ID</th>
-            <th>Total Spent</th>
+            <th>ID Utilizator</th>
+            <th>Total Cheltuit</th>
         </tr>
         </thead>
         <tbody>
@@ -116,23 +116,23 @@
         </tr>
         </tbody>
     </table>
-    <h2>Payment Metrics</h2>
+    <h2>Metrici de Plată</h2>
     <form class="filter-form" th:action="@{/paymentMetrics}" method="get">
         <label>
             <select name="userId">
-                <option value="" disabled selected>Select User ID</option>
+                <option value="" disabled selected>Selectează ID Utilizator</option>
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>
             </select>
         </label>
-        <button type="submit">Filter</button>
+        <button type="submit">Filtrează</button>
     </form>
     <div th:if="${userId != null}">
         <table>
             <thead>
             <tr>
-                <th>User ID</th>
-                <th>User Email</th>
-                <th>Total Amount</th>
+                <th>ID Utilizator</th>
+                <th>Email Utilizator</th>
+                <th>Total Suma</th>
             </tr>
             </thead>
             <tbody>
@@ -143,14 +143,14 @@
             </tr>
             </tbody>
         </table>
-        <h2>Status of the user's payments</h2>
+        <h2>User payment status</h2>
         <table>
             <thead>
             <tr>
                 <th>User ID</th>
-                <th>Total Trips</th>
-                <th>Paid Trips</th>
-                <th>Unpaid Trips</th>
+                <th>Total</th>
+                <th>Paid trips</th>
+                <th>Unpaid trips</th>
             </tr>
             </thead>
             <tbody>

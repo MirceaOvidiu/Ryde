@@ -71,21 +71,21 @@
     </style>
 </head>
 <body>
-<h1>Add an Employee</h1>
+<h1>Adaugă un angajat</h1>
 <form action="#" th:action="@{/employees/save}" th:object="${employee}" method="post">
-    <label for="name">Name:</label>
+    <label for="name">Prenume:</label>
     <input type="text" id="name" th:field="*{name}" /><br/>
-    <label for="surname">Surname:</label>
+    <label for="surname">Nume:</label>
     <input type="text" id="surname" th:field="*{surname}" /><br/>
-    <label for="department">Department:</label>
+    <label for="department">Departament:</label>
     <input type="text" id="department" th:field="*{department}" /><br/>
-    <label for="salary">Salary:</label>
+    <label for="salary">Salariu:</label>
     <input type="text" id="salary" th:field="*{salary}" /><br/>
     <label for="manager">Manager:</label>
     <select id="manager" th:field="*{manager}">
         <option th:each="manager : ${managers}" th:value="${manager.id}" th:text="${manager.name} + ' ' + ${manager.surname}"></option>
     </select><br/>
-    <button type="submit">Save</button>
+    <button type="submit">Salvează</button>
 </form>
 <table>
     <thead>
@@ -93,10 +93,10 @@
         <th>ID</th>
         <th>Name</th>
         <th>Surname</th>
-        <th>Department</th>
+        <th>Departament</th>
         <th>Salary</th>
-        <th>Manager Name</th>
-        <th>Manager Surname</th>
+        <th>Mgr Name</th>
+        <th>Mgr Surname</th>
     </tr>
     </thead>
     <tbody>

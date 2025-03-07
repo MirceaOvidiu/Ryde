@@ -22,7 +22,7 @@ class RegisterControllerTest {
     @Test
     void testUserRegistration() throws Exception {
         UserDto userDto = new UserDto();
-        userDto.setUsername("testUser");
+        userDto.setUsername("testUser2");
         userDto.setPassword("password123");
         userDto.setEmail("testuser@example.com");
         userDto.setIban("DE89370400440532013000");

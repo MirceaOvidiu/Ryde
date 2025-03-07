@@ -1,12 +1,12 @@
 <!--users list page thymeleaf template-->
-<!--@author: Dodi Mircea Ovidiu-->
-<!--@version: 6 jan 2025-->
+<!--@autor: Dodi Mircea Ovidiu-->
+<!--@versiune: 6 ian 2025-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>Utilizatori</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -80,7 +80,7 @@
         function showConfirmationDialog(userId) {
             const dialog = document.getElementById('confirmation-dialog');
             const confirmationMessage = document.getElementById('confirmation-message');
-            confirmationMessage.textContent = `Are you sure you want to delete the user ${userId}?`;
+            confirmationMessage.textContent = `Ești sigur că vrei să ștergi utilizatorul ${userId}?`;
             dialog.classList.add('active');
             document.getElementById('confirm-delete').onclick = function() {
                 if (document.getElementById('confirm-checkbox').checked) {
@@ -98,15 +98,15 @@
 </head>
 <body>
 <div class="users-container">
-    <h2>Users</h2>
+    <h2>Utilizatori</h2>
     <table>
         <thead>
         <tr>
             <th>ID</th>
-            <th>Username</th>
+            <th>Nume Utilizator</th>
             <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
+            <th>Rol</th>
+            <th>Acțiuni</th>
         </tr>
         </thead>
         <tbody>
@@ -125,9 +125,9 @@
     </table>
 </div>
 <div id="confirmation-dialog" class="confirmation-dialog">
-    <h3 id="confirmation-message">Are you sure you want to delete this user?</h3>
+    <h3 id="confirmation-message">Sure?</h3>
     <label>
-        <input type="checkbox" id="confirm-checkbox"> I understand the consequences
+        <input type="checkbox" id="confirm-checkbox"> Yeah man
     </label>
     <br>
     <button id="confirm-delete" class="delete-button">Confirm</button>

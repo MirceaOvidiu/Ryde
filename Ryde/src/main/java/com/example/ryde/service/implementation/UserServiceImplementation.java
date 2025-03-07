@@ -79,7 +79,6 @@ public class UserServiceImplementation implements UserService {
 
         // Check if the user exists and the password matches
         if (user != null && user.getPassword().equals(hashPassword(loginDto.getPassword()))) {
-            // Convert MyUser to UserDto and return
             return UserMapper.mapToUserDto(user);
         } else {
             // Throw an exception if the username or password is invalid
@@ -96,6 +95,15 @@ public class UserServiceImplementation implements UserService {
         if (count > 0) {
             throw new RuntimeException("Username already exists");
         }
+
+        if (!userDto.getUsername().matches("^[a-zA-Z0-9]+$")) {
+            throw new RuntimeException("Username must contain only alphanumeric characters");
+        }
+
+//        if (!userDto.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")) {
+//            throw new RuntimeException("Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character");
+//        }
+
 
         MyUser userDTO = UserMapper.mapToUser(userDto);
         userDTO.setRole("USER");
@@ -118,7 +126,7 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     public void forgetMe(Long id) {
         // Find and delete trip payments
-        List<TripPayment> tripPayments = entityManager.createQuery("SELECT tp FROM TripPayment tp WHERE tp.userId= :userId", TripPayment.class)
+        List<TripPayment> tripPayments = entityManager.createQuery("DELETE FROM TripPayment tp WHERE tp.userId= :userId", TripPayment.class)
                 .setParameter("userId", id)
                 .getResultList();
         for (TripPayment tripPayment : tripPayments) {
@@ -126,7 +134,7 @@ public class UserServiceImplementation implements UserService {
         }
 
         // Find and delete trips
-        List<Trip> trips = entityManager.createQuery("SELECT t FROM Trip t WHERE t.customer = :userId", Trip.class)
+        List<Trip> trips = entityManager.createQuery("DELETE FROM Trip t WHERE t.customer = :userId", Trip.class)
                 .setParameter("userId", id)
                 .getResultList();
         for (Trip trip : trips) {

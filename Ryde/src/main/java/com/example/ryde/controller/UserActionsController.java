@@ -49,7 +49,7 @@ public class UserActionsController {
     }
 
     @GetMapping("/forgetMe")
-    public String showForgetMePage(Model model) {
+    public String showForgetMePage() {
         return "forgetMeConfirmation";
     }
 

@@ -54,7 +54,8 @@ public interface TripPaymentRepository extends JpaRepository<TripPayment, Long> 
     ///  complex query 1 to get the usernames of the users who have unpaid trips
     @Query(value = "SELECT DISTINCT u.username " +
             "FROM \"user\" u " +
-            "WHERE u.id IN (SELECT tp.user_id " +
+            "WHERE u.id IN " +
+            "(SELECT tp.user_id " +
             "FROM trip_payment tp " +
             "WHERE tp.trip_id IN (SELECT t.id FROM trip t WHERE tp.paid = false))", nativeQuery = true)
     List<String> findUsernamesForUnpaidTrips();

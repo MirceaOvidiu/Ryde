@@ -6,7 +6,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>User Profile</title>
+    <title>Profil</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -49,15 +49,12 @@
 </head>
 <body>
 <div class="profile-container">
-    <h2>User Profile</h2>
+    <h2>Profil</h2>
     <div th:if="${user != null}" class="profile-info">
         <p>Username: <span th:text="${user.username}"></span></p>
         <p>Email: <span th:text="${user.email}"></span></p>
-        <p>Role: <span th:text="${user.role}"></span></p>
+<!--        <p>Rol: <span th:text="${user.role}"></span></p>-->
         <p>IBAN: <span th:text="${user.iban}"></span></p>
-    </div>
-    <div th:if="${error != null}" class="error-message">
-        <p th:text="${error}"></p>
     </div>
 </div>
 </body>

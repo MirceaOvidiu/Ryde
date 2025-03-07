@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Payment History</title>
+  <title>Istoric al platilor</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -76,21 +76,21 @@
 </head>
 <body>
 <div class="history-container">
-  <h1>Payment History</h1>
+  <h1>Istoric plati</h1>
   <table>
     <thead>
     <tr>
-      <th>Payment ID</th>
-      <th>Trip ID</th>
-      <th>Payment Date</th>
-      <th>Amount</th>
+<!--      <th>Payment ID</th>-->
+      <th>ID calatorie</th>
+      <th>Data platii</th>
+      <th>Suma</th>
       <th>IBAN</th>
-      <th>Paid</th>
+      <th>Paid?</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="payment : ${tripPayments}">
-      <td th:text="${payment.id}"></td>
+<!--      <td th:text="${payment.id}"></td>-->
       <td th:text="${payment.trip_id}"></td>
       <td th:text="${payment.payment_date}"></td>
       <td th:text="${payment.amount}"></td>

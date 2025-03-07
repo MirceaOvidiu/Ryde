@@ -6,7 +6,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Trip History</title>
+  <title>Istoric calatorii</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -56,20 +56,20 @@
 </head>
 <body>
 <div class="history-container">
-  <h1>Trip History</h1>
+  <h1>Istoric calatorii</h1>
   <table>
     <thead>
     <tr>
-      <th>Trip ID</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Start Station</th>
-      <th>End Location</th>
+<!--      <th>Trip ID</th>-->
+      <th>Inceputa la</th>
+      <th>Finalizata la</th>
+      <th>Statie de start</th>
+      <th>Statie de sosire</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="trip : ${trips}">
-      <td th:text="${trip.id}"></td>
+<!--      <td th:text="${trip.id}"></td>-->
       <td th:text="${trip.start_time}"></td>
       <td th:text="${trip.end_time}"></td>
       <td th:text="${trip.start_location}"></td>

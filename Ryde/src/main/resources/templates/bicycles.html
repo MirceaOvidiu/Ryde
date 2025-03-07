@@ -87,7 +87,7 @@
                 <td>
                     <form th:if="${bicycle.occupied_by == null}" th:action="@{/reserveBicycle}" method="post">
                         <input type="hidden" name="bicycleId" th:value="${bicycle.id}" />
-                        <button type="submit" class="reserve-button">Available</button>
+                        <button type="submit" class="reserve-button">Reserved</button>
                     </form>
                     <button th:if="${bicycle.occupied_by != null}" class="busy-button">Occupied</button>
                 </td>
