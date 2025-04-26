@@ -1,0 +1,61 @@
+<!--user profile thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 8 dec 2024-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #199d0b);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+        h2 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666666;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .profile-info span {
+            font-weight: bold;
+            color: #333333;
+        }
+        .error-message {
+            color: red;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <h2>Profil</h2>
+    <div th:if="${user != null}" class="profile-info">
+        <p>Username: <span th:text="${user.username}"></span></p>
+        <p>Email: <span th:text="${user.email}"></span></p>
+<!--        <p>Rol: <span th:text="${user.role}"></span></p>-->
+        <p>IBAN: <span th:text="${user.iban}"></span></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!--payroll metrics thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Metrici de Salarii</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #0073e6);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Departamente după salariul mediu</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Nume Departament</th>
+            <th>Salariu Mediu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department[0]}"></td>
+            <td th:text="${department[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>Angajați cu un salariu mai mic decât departamentul IT</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Prenume Angajat</th>
+            <th>Nume Angajat</th>
+            <th>Salariu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.surname}"></td>
+            <td th:text="${employee.salary}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>Angajați cu un salariu mai mare decât departamentul HR</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Prenume Angajat</th>
+            <th>Nume Angajat</th>
+            <th>Salariu</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees2}">
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.surname}"></td>
+            <td th:text="${employee.salary}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

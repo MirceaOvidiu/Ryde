@@ -1,0 +1,110 @@
+<!--payment history thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Istoric al platilor</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f0f8ff, #199d0b);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .history-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 90%;
+      min-width: 900px;
+      max-width: 1800px;
+    }
+    h1 {
+      color: #333333;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #199d0b;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+    .pay-button {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .paid-button {
+      background-color: green;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: default;
+    }
+    .iban-cell {
+      width: 200px; /* Adjust the width as needed */
+    }
+  </style>
+</head>
+<body>
+<div class="history-container">
+  <h1>Istoric plati</h1>
+  <table>
+    <thead>
+    <tr>
+<!--      <th>Payment ID</th>-->
+      <th>ID calatorie</th>
+      <th>Data platii</th>
+      <th>Suma</th>
+      <th>IBAN</th>
+      <th>Paid?</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${tripPayments}">
+<!--      <td th:text="${payment.id}"></td>-->
+      <td th:text="${payment.trip_id}"></td>
+      <td th:text="${payment.payment_date}"></td>
+      <td th:text="${payment.amount}"></td>
+      <td th:text="${payment.iban}" class="iban-cell"></td>
+      <td>
+        <form th:if="${!payment.paid}" th:action="@{/pay}" method="post">
+          <input type="hidden" name="paymentId" th:value="${payment.id}" />
+          <button type="submit" class="pay-button">Pay</button>
+        </form>
+        <button th:if="${payment.paid}" class="paid-button">Paid</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

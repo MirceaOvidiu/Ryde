@@ -1,0 +1,168 @@
+<!--payment metrics thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metrici de Plată</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #0073e6);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .metrics-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            min-width: 900px;
+            max-width: 1800px;
+        }
+        h1 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .filter-form {
+            margin-bottom: 20px;
+        }
+        .filter-form select, .filter-form button {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .filter-form button {
+            color: white;
+            background-color: #0073e6;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="metrics-container">
+    <h2>Utilizatori cu cele mai multe călătorii neplătite</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Date Utilizator</th>
+            <th>Număr Călătorii Neplătite</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${usersWithMostUnpaidTrips}">
+            <td th:text="${user[0]}"></td>
+            <td th:text="${user[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Utilizatori cu călătorii neplătite</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Utilizatori cu călătorii neplătite:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="username : ${usernamesForUnpaidTrips}">
+            <td th:text="${username}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Utilizatori după datorie</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID Utilizator</th>
+            <th>Total Cheltuit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${userSpendingOnTrips}">
+            <td th:text="${item[0]}"></td>
+            <td th:text="${item[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Metrici de Plată</h2>
+    <form class="filter-form" th:action="@{/paymentMetrics}" method="get">
+        <label>
+            <select name="userId">
+                <option value="" disabled selected>Selectează ID Utilizator</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.id}"></option>
+            </select>
+        </label>
+        <button type="submit">Filtrează</button>
+    </form>
+    <div th:if="${userId != null}">
+        <table>
+            <thead>
+            <tr>
+                <th>ID Utilizator</th>
+                <th>Email Utilizator</th>
+                <th>Total Suma</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="metric : ${paymentMetrics}">
+                <td th:text="${metric.userId}"></td>
+                <td th:text="${metric.userEmail}"></td>
+                <td th:text="${metric.totalAmount}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>User payment status</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Total</th>
+                <th>Paid trips</th>
+                <th>Unpaid trips</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="metric : ${userTripMetrics}">
+                <td th:text="${metric.userId}"></td>
+                <td th:text="${metric.totalTrips}"></td>
+                <td th:text="${metric.paidTrips}"></td>
+                <td th:text="${metric.unpaidTrips}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

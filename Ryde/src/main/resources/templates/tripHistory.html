@@ -1,0 +1,82 @@
+<!--trip history page thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Istoric calatorii</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f0f8ff, #199d0b);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .history-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 80%;
+      max-width: 800px;
+    }
+    h1 {
+      color: #333333;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #199d0b;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+<div class="history-container">
+  <h1>Istoric calatorii</h1>
+  <table>
+    <thead>
+    <tr>
+<!--      <th>Trip ID</th>-->
+      <th>Inceputa la</th>
+      <th>Finalizata la</th>
+      <th>Statie de start</th>
+      <th>Statie de sosire</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trip : ${trips}">
+<!--      <td th:text="${trip.id}"></td>-->
+      <td th:text="${trip.start_time}"></td>
+      <td th:text="${trip.end_time}"></td>
+      <td th:text="${trip.start_location}"></td>
+      <td th:text="${trip.end_location}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

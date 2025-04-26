@@ -1,0 +1,138 @@
+<!--users list page thymeleaf template-->
+<!--@autor: Dodi Mircea Ovidiu-->
+<!--@versiune: 6 ian 2025-->
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Utilizatori</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #0073e6);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .users-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            min-width: 900px;
+            max-width: 1800px;
+        }
+        h2 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #0073e6;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .delete-button {
+            color: white;
+            background-color: #e60000;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        .confirmation-dialog.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function showConfirmationDialog(userId) {
+            const dialog = document.getElementById('confirmation-dialog');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            confirmationMessage.textContent = `Ești sigur că vrei să ștergi utilizatorul ${userId}?`;
+            dialog.classList.add('active');
+            document.getElementById('confirm-delete').onclick = function() {
+                if (document.getElementById('confirm-checkbox').checked) {
+                    document.getElementById('delete-form').action = '/deleteUser/' + userId;
+                    document.getElementById('delete-form').submit();
+                }
+            };
+        }
+
+        function closeConfirmationDialog() {
+            const dialog = document.getElementById('confirmation-dialog');
+            dialog.classList.remove('active');
+        }
+    </script>
+</head>
+<body>
+<div class="users-container">
+    <h2>Utilizatori</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume Utilizator</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role}"></td>
+            <td>
+                <button class="delete-button"
+                        th:onclick="'showConfirmationDialog(' + ${user.id} + ')'"
+                        type="button">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="confirmation-dialog" class="confirmation-dialog">
+    <h3 id="confirmation-message">Sure?</h3>
+    <label>
+        <input type="checkbox" id="confirm-checkbox"> Yeah man
+    </label>
+    <br>
+    <button id="confirm-delete" class="delete-button">Confirm</button>
+    <button onclick="closeConfirmationDialog()">Cancel</button>
+    <form id="delete-form" method="post" style="display: none;"></form>
+</div>
+</body>
+</html>

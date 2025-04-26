@@ -1,0 +1,103 @@
+<!--bicycles thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@date: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bicycles</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #199d0b);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .bicycles-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 600px;
+        }
+        h2 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #199d0b;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        p {
+            color: #ff0000;
+            font-size: 1.2em;
+        }
+        .reserve-button {
+            background-color: #199d0b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .busy-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="bicycles-container">
+    <h2>Bicycles Status</h2>
+    <div th:if="${bicycles != null}">
+        <table>
+            <thead>
+            <tr>
+                <th>Model</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bicycle : ${bicycles}">
+                <td th:text="${bicycle.model}"></td>
+                <td>
+                    <form th:if="${bicycle.occupied_by == null}" th:action="@{/reserveBicycle}" method="post">
+                        <input type="hidden" name="bicycleId" th:value="${bicycle.id}" />
+                        <button type="submit" class="reserve-button">Reserved</button>
+                    </form>
+                    <button th:if="${bicycle.occupied_by != null}" class="busy-button">Occupied</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${bicycles == null}">
+        <p>No bicycles available.</p>
+    </div>
+</div>
+</body>
+</html>
