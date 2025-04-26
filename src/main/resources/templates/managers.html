@@ -1,0 +1,184 @@
+<!--managers page thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@date: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Create Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4c6baf;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #454da0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .delete-button {
+            color: white;
+            background-color: #e60000;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        .confirmation-dialog.active {
+            display: block;
+        }
+    </style>
+    <script>
+        function showConfirmationDialog(managerId) {
+            const dialog = document.getElementById('confirmation-dialog');
+            const confirmationMessage = document.getElementById('confirmation-message');
+            confirmationMessage.textContent = `Are you sure you want to delete the manager ${managerId}?`;
+            dialog.classList.add('active');
+            document.getElementById('confirm-delete').onclick = function() {
+                if (document.getElementById('confirm-checkbox').checked) {
+                    document.getElementById('delete-form').action = '/managers/delete/' + managerId;
+                    document.getElementById('delete-form').submit();
+                }
+            };
+        }
+
+        function closeConfirmationDialog() {
+            const dialog = document.getElementById('confirmation-dialog');
+            dialog.classList.remove('active');
+        }
+    </script>
+</head>
+<body>
+<h1>Add a manager</h1>
+<form action="#" th:action="@{/managers/save}" th:object="${manager}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" /><br/>
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" th:field="*{surname}" /><br/>
+    <label for="department">Department:</label>
+    <input type="text" id="department" th:field="*{department}" /><br/>
+    <label for="salary">Salary:</label>
+    <input type="text" id="salary" th:field="*{salary}" /><br/>
+    <button type="submit">Save</button>
+</form>
+
+<h1>Managers List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="manager : ${managers}">
+        <td th:text="${manager.id}"></td>
+        <td th:text="${manager.name}"></td>
+        <td th:text="${manager.surname}"></td>
+        <td th:text="${manager.department}"></td>
+        <td th:text="${manager.salary}"></td>
+        <td>
+            <button class="delete-button"
+                    th:onclick="'showConfirmationDialog(' + ${manager.id} + ')'"
+                    type="button">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Employees by Manager</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Manager ID</th>
+        <th>Manager Name</th>
+        <th>Manager Surname</th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Employee Surname</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${employeesByManager}">
+        <td th:text="${item.managerId}"></td>
+        <td th:text="${item.managerName}"></td>
+        <td th:text="${item.managerSurname}"></td>
+        <td th:text="${item.employeeId}"></td>
+        <td th:text="${item.employeeName}"></td>
+        <td th:text="${item.employeeSurname}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="confirmation-dialog" class="confirmation-dialog">
+    <h3 id="confirmation-message">Are you sure you want to delete this manager?</h3>
+    <label>
+        <input type="checkbox" id="confirm-checkbox"> I understand the consequences
+    </label>
+    <br>
+    <button id="confirm-delete" class="delete-button">Confirm</button>
+    <button onclick="closeConfirmationDialog()">Cancel</button>
+    <form id="delete-form" method="post" style="display: none;"></form>
+</div>
+</body>
+</html>
