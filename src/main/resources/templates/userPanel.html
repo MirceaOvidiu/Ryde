@@ -1,0 +1,66 @@
+<!--user panel thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 3 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Panel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #199d0b);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .actions-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            color: #333333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #199d0b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover {
+            background-color: #145a07;
+        }
+    </style>
+</head>
+<body>
+<div class="actions-container">
+    <h2>User Actions</h2>
+    <button onclick="location.href='/trip'">Go on a ryde</button>
+    <button onclick="location.href='/bicycles'">Bicycles Status</button>
+    <button onclick="location.href='/tripHistory'">Trip History</button>
+    <button onclick="location.href='/paymentHistory'">Payment History</button>
+    <button onclick="location.href='/userDetails'">User Info</button>
+    <button onclick="location.href='/logout'">Logout</button>
+</div>
+</body>
+</html>

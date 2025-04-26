@@ -1,0 +1,177 @@
+<!--trip page thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@version: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ryde with us</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #0056b3;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    select, input, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 16px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    select:focus, input:focus, button:focus {
+      outline: none;
+      border-color: #0056b3;
+      box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+    }
+
+    button {
+      background-color: #0056b3;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #004494;
+    }
+
+    #endDockingStationContainer {
+      max-width: 600px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    #clock {
+      font-weight: bold;
+      font-size: 18px;
+      color: #ff4500;
+    }
+
+    @media (max-width: 768px) {
+      .container, #endDockingStationContainer {
+        padding: 15px;
+      }
+
+      select, input, button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Start Your Ryde</h2>
+  <form id="startTripForm" action="/startTrip" method="post">
+    <label for="dockingStation">Choose a starting docking station:</label>
+    <select id="dockingStation" name="dockingStation" required>
+      <option value="" disabled selected>Select a docking station</option>
+      <option th:each="station : ${dockingStations}" th:value="${station.name}" th:text="${station.name}"></option>
+    </select>
+    <label for="bicycle">Choose an available bicycle:</label>
+    <select id="bicycle" name="bicycleModel" required>
+      <option value="" disabled selected>Select a bicycle</option>
+      <option th:each="bicycle : ${bicycles}" th:value="${bicycle.model}" th:text="${bicycle.model}"></option>
+    </select>
+    <input type="hidden" id="startTime" name="startTime" value="" />
+    <button type="submit">Start Trip</button>
+  </form>
+</div>
+
+<div id="endDockingStationContainer">
+  <h2>End Your Trip</h2>
+  <div>
+    <label>Time Elapsed: <span id="clock">00:00:00</span></label>
+  </div>
+  <form action="/endTrip" method="post" onsubmit="stopClock();">
+    <label for="endDockingStation">Choose an ending docking station:</label>
+    <select id="endDockingStation" name="endLocation">
+      <option th:each="station : ${dockingStations}" th:value="${station.name}" th:text="${station.name}"></option>
+    </select>
+    <button type="submit">End Trip</button>
+  </form>
+</div>
+
+<script>
+  let clockInterval;
+
+  document.getElementById('startTripForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    document.getElementById('startTime').value = new Date().toISOString();
+    showEndDockingStation();
+    startClock();
+    // Submit the form data using AJAX
+    const formData = new FormData(this);
+    fetch(this.action, {
+      method: this.method,
+      body: formData
+    }).then(response => {
+      if (response.ok) {
+        console.log('Trip started successfully');
+      } else {
+        console.error('Failed to start trip');
+      }
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  });
+
+  function showEndDockingStation() {
+    document.getElementById('endDockingStationContainer').style.display = 'block';
+  }
+
+  function startClock() {
+    const startTime = new Date();
+    clockInterval = setInterval(() => {
+      const now = new Date();
+      const elapsedTime = new Date(now - startTime);
+      const hours = String(elapsedTime.getUTCHours()).padStart(2, '0');
+      const minutes = String(elapsedTime.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(elapsedTime.getUTCSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }, 1000);
+  }
+
+  function stopClock() {
+    clearInterval(clockInterval);
+  }
+</script>
+</body>
+</html>
