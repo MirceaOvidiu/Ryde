@@ -2,7 +2,7 @@ package com.example.ryde.isp;
 
 public enum Statii {
     Politehnica("Politehnica"),
-    Erorilor("Eroilor"),
+    Eroilor("Eroilor"),
     Grozavesti("Grozavesti"),
     Izvor("Izvor");
 

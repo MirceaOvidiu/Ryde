@@ -115,21 +115,6 @@ public class Meniu {
         }
     }
 
-//    public void eliberareBicicleta(String bicicletaID, User user, Statii locatie, Bicicleta[] biciclete) {
-//        // get the bike by id
-//        Bicicleta bicicleta = null;
-//        for (Bicicleta b : biciclete) {
-//            if (b.getId().equals(bicicletaID)) {
-//                bicicleta = b;
-//                break;
-//            }
-//        }
-//        if (bicicleta != null) {
-//            bicicleta.eliberare(user, locatie);
-//        } else {
-//            System.out.println("Bicicleta cu ID-ul " + bicicletaID + " nu a fost gasita.");
-//        }
-//    }
 
     public void startCursa(String bicicletaID, User user, Statii locatie, Bicicleta[] biciclete, Cursa cursa) {
         // get the bike by id
@@ -159,6 +144,9 @@ public class Meniu {
         cursa.setEndLocation(endLocation.getStationName());
         cursa.setEndTime(String.valueOf(System.currentTimeMillis()));
         cursa.endCursa();
+
+        int disatance = (int)((Long.parseLong(cursa.getEndTime()) - Long.parseLong(cursa.getStartTime())) * 5);
+        cursa.setDistance(disatance);
         // write the cursa to a file
         cursa.writeCursaToFile(cursa);
         // eliberare bicicleta
