@@ -16,10 +16,18 @@ public class Client extends User {
 
     private String Iban;
 
-    //mai trebuie adaugat bicleta I guess dar nu stiu daca obiect sau nume
-    private void rezervare(){
-        // Implement reservation logic here
-        // Adaugi bicicleta ca obiect sau nume si o faci indisponibila
+    private void rezervare(Bicicleta bicicleta, Statii location){
+
+        bicicleta.rezervare( bicicleta.getId(), this);
+
+
+        Cursa cursa = new Cursa();
+        cursa.setStartLocation(location.getStationName());
+        cursa.setUserId(this.getId());
+        cursa.setBikeId(bicicleta.getId());
+        cursa.setStartTime(String.valueOf(System.currentTimeMillis()));
+        cursa.startCursa();
+
 
 
     }
