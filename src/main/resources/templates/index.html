@@ -1,0 +1,65 @@
+<!--index thymeleaf template-->
+<!--@author: Dodi Mircea Ovidiu-->
+<!--@date: 6 jan 2025-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ryde - Homepage</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #199d0b);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #333333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #ffffff;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 10px;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Ryde</h1>
+    <p>Your journey starts here.</p>
+    <a href="/login" class="button">Login</a>
+    <br>
+    <a href="/register" class="button">Register</a>
+</div>
+</body>
+</html>
